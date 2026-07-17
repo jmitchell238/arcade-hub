@@ -28,6 +28,18 @@
       "tags": ["Runner", "Casual", "Arcade"],
       "featured": false,
       "repo": "crowd-runner"
+    },
+    {
+      "id": "drop-and-fuse",
+      "title": "Drop & Fuse",
+      "subtitle": "Match orbs. Chain merges. Don’t overflow.",
+      "description": "Drop glowing orbs into the bin. Same sizes fuse into the next tier — chain big merges for high scores, but never cross the danger line.",
+      "url": "https://jmitchell238.github.io/drop-and-fuse/",
+      "cover": "art/covers/drop-and-fuse.jpg",
+      "accent": "#3de7ff",
+      "tags": ["Puzzle", "Merge", "Casual"],
+      "featured": false,
+      "repo": "drop-and-fuse"
     }
   ]
 }
