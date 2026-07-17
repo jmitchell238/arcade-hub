@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.004"
+    "appVersion": "1.1.005"
   },
   "games": [
     {
@@ -46,7 +46,7 @@
       "id": "neon-autofire",
       "title": "Neon Autofire",
       "subtitle": "Run. Jump. Auto-blast. Survive.",
-      "description": "Side-scrolling platformer shooter inspired by Mr. Autofire. Run and jump a neon hero through the city while guns auto-fire, collect XP gems, pick upgrades, and survive escalating waves and bosses.",
+      "description": "Side-scrolling platformer shooter inspired by Mr. Autofire. Pixel-art cyberpunk cyborg hero (CraftPix), run and jump through a neon city, auto-fire on punks and yakuza thugs, level up, and survive the swarm.",
       "url": "https://jmitchell238.github.io/neon-autofire/",
       "cover": "art/covers/neon-autofire.jpg",
       "accent": "#ff4fd8",
