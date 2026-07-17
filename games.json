@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.002"
+    "appVersion": "1.1.003"
   },
   "games": [
     {
@@ -41,6 +41,18 @@
       "tags": ["Puzzle", "Merge", "Casual"],
       "featured": false,
       "repo": "drop-and-fuse"
+    },
+    {
+      "id": "neon-autofire",
+      "title": "Neon Autofire",
+      "subtitle": "Move. Auto-blast. Level up. Survive.",
+      "description": "Side-scrolling auto-shooter inspired by Mr. Autofire. Steer your neon ship while weapons fire themselves, collect XP gems, pick upgrades, and survive escalating waves and bosses.",
+      "url": "https://jmitchell238.github.io/neon-autofire/",
+      "cover": "art/covers/neon-autofire.jpg",
+      "accent": "#ff4fd8",
+      "tags": ["Shooter", "Action", "Arcade"],
+      "featured": false,
+      "repo": "neon-autofire"
     }
   ]
 }
