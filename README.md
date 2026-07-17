@@ -20,6 +20,15 @@ Open it in a browser, tap **Install** / **Add to Home Screen**, and launch VoidR
 | `manifest.webmanifest` + `sw.js` | PWA install + offline shell |
 | `art/` + `icons/` | Covers and app icons |
 
+## Tests
+
+```bash
+node tests/run.mjs
+```
+
+Covers catalog helpers (filter, recent, HTML escape, validation), `games.json` integrity
+(covers on disk, https links, one featured game), version/SW sync, and PWA shell files.
+
 ## Versioning
 
 Same scheme as VoidRush (`hole-game`):
