@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.005"
+    "appVersion": "1.1.006"
   },
   "games": [
     {
@@ -53,6 +53,18 @@
       "tags": ["Shooter", "Platformer", "Arcade"],
       "featured": false,
       "repo": "neon-autofire"
+    },
+    {
+      "id": "ironvale",
+      "title": "Ironvale",
+      "subtitle": "Run. Jump. Slash. Survive.",
+      "description": "Medieval 2D platformer. Play a knight through the realm of Ironvale — leap platforms, sword-slash slimes and bandits, collect gold XP, and pick blessings as waves grow harder.",
+      "url": "https://jmitchell238.github.io/ironvale/",
+      "cover": "art/covers/ironvale.jpg",
+      "accent": "#c9a227",
+      "tags": ["Platformer", "Action", "Medieval"],
+      "featured": false,
+      "repo": "ironvale"
     }
   ]
 }
