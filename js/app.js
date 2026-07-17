@@ -315,15 +315,81 @@
     }
   }
 
+  // ---------- version UI ----------
+  function applyVersionLabels() {
+    const name = (typeof HUB_NAME !== 'undefined' ? HUB_NAME : 'Arcade Hub');
+    const label = (typeof HUB_VERSION_LABEL !== 'undefined' ? HUB_VERSION_LABEL : '');
+    const full = label ? (name + ' ' + label) : name;
+    const tag = document.getElementById('versionTag');
+    const line = document.getElementById('versionLine');
+    if (tag) tag.textContent = full;
+    if (line) line.textContent = full;
+  }
+
+  // ---------- PWA + auto-update (same pattern as VoidRush / hole-game) ----------
+  function safeReloadForUpdate() {
+    if (window.__reloaded) return;
+    window.__reloaded = true;
+    location.reload();
+  }
+
+  function activateWaitingWorker(reg) {
+    if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+  }
+
+  function watchInstallingWorker(reg) {
+    const worker = reg.installing;
+    if (!worker) return;
+    worker.addEventListener('statechange', () => {
+      if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+        worker.postMessage({ type: 'SKIP_WAITING' });
+      }
+    });
+  }
+
   function registerSW() {
     if (!('serviceWorker' in navigator)) return;
-    navigator.serviceWorker.register('./sw.js').catch(err => {
-      console.warn('SW registration failed', err);
+    if (!(location.protocol === 'https:' || location.hostname === 'localhost' ||
+          location.hostname === '127.0.0.1')) return;
+
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      activateWaitingWorker(reg);
+      if (reg.installing) watchInstallingWorker(reg);
+      reg.addEventListener('updatefound', () => watchInstallingWorker(reg));
+
+      const checkForUpdate = () => { reg.update().catch(() => {}); };
+      checkForUpdate();
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) checkForUpdate();
+      });
+      window.addEventListener('focus', checkForUpdate);
+      setInterval(checkForUpdate, 60 * 1000);
+
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        safeReloadForUpdate();
+      });
+    }).catch(err => console.warn('[sw] register failed', err));
+
+    function checkRemoteVersion() {
+      fetch('js/config.js', { cache: 'no-store' })
+        .then(r => r.ok ? r.text() : '')
+        .then(text => {
+          const m = text.match(/(?:HUB_VERSION|GAME_VERSION)\s*=\s*['"]([^'"]+)['"]/);
+          const current = (typeof HUB_VERSION !== 'undefined' ? HUB_VERSION : GAME_VERSION);
+          if (m && m[1] && m[1] !== current) safeReloadForUpdate();
+        })
+        .catch(() => {});
+    }
+    checkRemoteVersion();
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) checkRemoteVersion();
     });
+    setInterval(checkRemoteVersion, 2 * 60 * 1000);
   }
 
   // ---------- boot ----------
   async function boot() {
+    applyVersionLabels();
     setupInstall();
     registerSW();
     document.addEventListener('click', onClick);

@@ -14,10 +14,22 @@ Open it in a browser, tap **Install** / **Add to Home Screen**, and launch VoidR
 |------|---------|
 | `index.html` | Launcher UI |
 | `css/style.css` | Neon arcade styling |
+| `js/config.js` | **Hub version** (`HUB_VERSION` / `GAME_VERSION`) |
 | `js/app.js` | Catalog, filters, PWA install, recent plays |
 | `games.json` | **Add new games here** |
 | `manifest.webmanifest` + `sw.js` | PWA install + offline shell |
 | `art/` + `icons/` | Covers and app icons |
+
+## Versioning
+
+Same scheme as VoidRush (`hole-game`):
+
+- `HUB_VERSION` in `js/config.js` — `MAJOR.MINOR.PATCH` (patch zero-padded to 3 digits)
+- Also exposed as `GAME_VERSION` for shared update-check patterns
+- UI shows `Arcade Hub v…` (corner tag + footer)
+- Keep `CACHE` in `sw.js` in sync: `'arcade-hub-' + HUB_VERSION`
+- SW + remote `config.js` version check auto-reloads installed PWAs
+- Optional mirror: `hub.appVersion` in `games.json`
 
 Games themselves stay on their own repos/Pages. This hub only links to them.
 
