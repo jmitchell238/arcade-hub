@@ -144,3 +144,4 @@ The hub shell (UI + covers) works offline once visited. Individual games still n
 - [VoidRush](https://jmitchell238.github.io/hole-game/) (`hole-game`)
 - [Crowd Clash Runner](https://jmitchell238.github.io/crowd-runner/) (`crowd-runner`)
 - [Drop & Fuse](https://jmitchell238.github.io/drop-and-fuse/) (`drop-and-fuse`)
+- [Neon Autofire](https://jmitchell238.github.io/neon-autofire/) (`neon-autofire`)
