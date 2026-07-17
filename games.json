@@ -2,7 +2,8 @@
   "version": 1,
   "hub": {
     "name": "Arcade Hub",
-    "tagline": "All your games. One place."
+    "tagline": "All your games. One place.",
+    "appVersion": "1.1.001"
   },
   "games": [
     {
