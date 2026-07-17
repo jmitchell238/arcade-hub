@@ -2,11 +2,14 @@
 (() => {
   'use strict';
 
-  const RECENT_KEY = 'arcade-hub-recent';
-  const RECENT_MAX = 6;
+  const RECENT_KEY = (typeof RECENT_KEY_DEFAULT !== 'undefined')
+    ? RECENT_KEY_DEFAULT
+    : 'arcade-hub-recent';
+  const RECENT_MAX = (typeof RECENT_MAX_DEFAULT !== 'undefined')
+    ? RECENT_MAX_DEFAULT
+    : 6;
 
   const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
   const els = {
     tagline: $('#tagline'),
@@ -38,61 +41,54 @@
   let deferredPrompt = null;
   let toastTimer = 0;
 
+  // Prefer shared helpers from catalog.js; fall back if script order breaks.
+  const _escapeHtml = typeof escapeHtml === 'function'
+    ? escapeHtml
+    : (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const _allTags = typeof allTags === 'function'
+    ? () => allTags(games)
+    : () => {
+      const set = new Set();
+      for (const g of games) for (const t of g.tags || []) set.add(t);
+      return ['All', ...[...set].sort((a, b) => a.localeCompare(b))];
+    };
+  const _filteredGames = typeof filteredGames === 'function'
+    ? () => filteredGames(games, activeFilter)
+    : () => activeFilter === 'All' ? games : games.filter(g => (g.tags || []).includes(activeFilter));
+  const _byId = typeof byId === 'function'
+    ? (id) => byId(games, id)
+    : (id) => games.find(g => g.id === id);
+  const _loadRecent = typeof loadRecent === 'function'
+    ? () => loadRecent(localStorage, RECENT_KEY)
+    : () => {
+      try {
+        const raw = localStorage.getItem(RECENT_KEY);
+        const list = raw ? JSON.parse(raw) : [];
+        return Array.isArray(list) ? list.filter(id => typeof id === 'string') : [];
+      } catch { return []; }
+    };
+  const _saveRecent = typeof saveRecent === 'function'
+    ? (id) => saveRecent(localStorage, id, { key: RECENT_KEY, max: RECENT_MAX })
+    : (id) => {
+      const next = [id, ..._loadRecent().filter(x => x !== id)].slice(0, RECENT_MAX);
+      try { localStorage.setItem(RECENT_KEY, JSON.stringify(next)); } catch { /* */ }
+      return next;
+    };
+
   // ---------- utils ----------
   function toast(msg, ms = 2200) {
+    if (!els.toast) return;
     els.toast.textContent = msg;
     els.toast.classList.remove('hidden');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => els.toast.classList.add('hidden'), ms);
   }
 
-  function loadRecent() {
-    try {
-      const raw = localStorage.getItem(RECENT_KEY);
-      const list = raw ? JSON.parse(raw) : [];
-      return Array.isArray(list) ? list.filter(id => typeof id === 'string') : [];
-    } catch {
-      return [];
-    }
-  }
-
-  function saveRecent(id) {
-    const next = [id, ...loadRecent().filter(x => x !== id)].slice(0, RECENT_MAX);
-    try { localStorage.setItem(RECENT_KEY, JSON.stringify(next)); }
-    catch { /* private mode etc. */ }
-    return next;
-  }
-
-  function escapeHtml(s) {
-    return String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  function byId(id) {
-    return games.find(g => g.id === id);
-  }
-
   // ---------- render ----------
-  function allTags() {
-    const set = new Set();
-    for (const g of games) {
-      for (const t of g.tags || []) set.add(t);
-    }
-    return ['All', ...[...set].sort((a, b) => a.localeCompare(b))];
-  }
-
-  function filteredGames() {
-    if (activeFilter === 'All') return games;
-    return games.filter(g => (g.tags || []).includes(activeFilter));
-  }
-
   function renderFilters() {
-    const tags = allTags();
+    const tags = _allTags();
     els.filterBar.innerHTML = tags.map(t =>
-      `<button type="button" class="filter-chip${t === activeFilter ? ' active' : ''}" data-filter="${escapeHtml(t)}" role="tab" aria-selected="${t === activeFilter}">${escapeHtml(t)}</button>`
+      `<button type="button" class="filter-chip${t === activeFilter ? ' active' : ''}" data-filter="${_escapeHtml(t)}" role="tab" aria-selected="${t === activeFilter}">${_escapeHtml(t)}</button>`
     ).join('');
   }
 
@@ -108,31 +104,31 @@
     els.featured.setAttribute('aria-label', `Featured: ${featured.title}`);
     els.featured.dataset.id = featured.id;
     els.featured.innerHTML = `
-      <div class="featured-bg" style="background-image:url('${escapeHtml(featured.cover || '')}')"></div>
+      <div class="featured-bg" style="background-image:url('${_escapeHtml(featured.cover || '')}')"></div>
       <div class="featured-shade"></div>
       <div class="featured-content">
         <span class="badge">Featured</span>
-        <h3>${escapeHtml(featured.title)}</h3>
-        <p>${escapeHtml(featured.subtitle || featured.description || '')}</p>
-        <button type="button" class="featured-cta" data-play="${escapeHtml(featured.id)}">▶  Play now</button>
+        <h3>${_escapeHtml(featured.title)}</h3>
+        <p>${_escapeHtml(featured.subtitle || featured.description || '')}</p>
+        <button type="button" class="featured-cta" data-play="${_escapeHtml(featured.id)}">▶  Play now</button>
       </div>
     `;
   }
 
   function cardHtml(g, index) {
     const tags = (g.tags || []).slice(0, 3)
-      .map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
+      .map(t => `<span class="tag">${_escapeHtml(t)}</span>`).join('');
     const delay = Math.min(index * 40, 280);
     return `
-      <button type="button" class="game-card" role="listitem" data-id="${escapeHtml(g.id)}"
-        style="--card-accent:${escapeHtml(g.accent || '#3de7ff')}; animation-delay:${delay}ms"
-        aria-label="${escapeHtml(g.title)}">
-        <div class="card-cover" style="background-image:url('${escapeHtml(g.cover || '')}')">
+      <button type="button" class="game-card" role="listitem" data-id="${_escapeHtml(g.id)}"
+        style="--card-accent:${_escapeHtml(g.accent || '#3de7ff')}; animation-delay:${delay}ms"
+        aria-label="${_escapeHtml(g.title)}">
+        <div class="card-cover" style="background-image:url('${_escapeHtml(g.cover || '')}')">
           <span class="card-play" aria-hidden="true">▶</span>
         </div>
         <div class="card-meta">
-          <h3>${escapeHtml(g.title)}</h3>
-          <p>${escapeHtml(g.subtitle || '')}</p>
+          <h3>${_escapeHtml(g.title)}</h3>
+          <p>${_escapeHtml(g.subtitle || '')}</p>
           <div class="card-tags">${tags}</div>
         </div>
       </button>
@@ -140,25 +136,25 @@
   }
 
   function renderGrid() {
-    const list = filteredGames();
+    const list = _filteredGames();
     els.gameCount.textContent = `${games.length} game${games.length === 1 ? '' : 's'}`;
     els.gameGrid.innerHTML = list.map((g, i) => cardHtml(g, i)).join('');
     els.emptyState.classList.toggle('hidden', list.length > 0);
   }
 
   function renderRecent() {
-    const ids = loadRecent().filter(id => byId(id));
+    const ids = _loadRecent().filter(id => _byId(id));
     if (!ids.length) {
       els.recentSection.classList.add('hidden');
       return;
     }
     els.recentSection.classList.remove('hidden');
     els.recentRow.innerHTML = ids.map(id => {
-      const g = byId(id);
+      const g = _byId(id);
       return `
-        <button type="button" class="recent-chip" data-id="${escapeHtml(g.id)}" aria-label="Play ${escapeHtml(g.title)}">
-          <span class="recent-thumb" style="background-image:url('${escapeHtml(g.cover || '')}')"></span>
-          ${escapeHtml(g.title)}
+        <button type="button" class="recent-chip" data-id="${_escapeHtml(g.id)}" aria-label="Play ${_escapeHtml(g.title)}">
+          <span class="recent-thumb" style="background-image:url('${_escapeHtml(g.cover || '')}')"></span>
+          ${_escapeHtml(g.title)}
         </button>
       `;
     }).join('');
@@ -176,7 +172,7 @@
     activeGame = game;
     els.sheetCover.style.backgroundImage = game.cover ? `url('${game.cover}')` : '';
     els.sheetTags.innerHTML = (game.tags || [])
-      .map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
+      .map(t => `<span class="tag">${_escapeHtml(t)}</span>`).join('');
     els.sheetTitle.textContent = game.title;
     els.sheetSub.textContent = game.subtitle || '';
     els.sheetDesc.textContent = game.description || '';
@@ -194,16 +190,15 @@
     activeGame = null;
   }
 
-  // ---------- play ----------
+  // ---------- play (links out — games are NOT bundled) ----------
   function playGame(game, { newTab = false } = {}) {
     if (!game || !game.url) {
       toast('This game has no URL yet.');
-      return;
+      return false;
     }
-    saveRecent(game.id);
+    _saveRecent(game.id);
     renderRecent();
     toast(`Launching ${game.title}…`);
-    // Brief pause so the toast is visible, then navigate.
     setTimeout(() => {
       if (newTab) {
         window.open(game.url, '_blank', 'noopener');
@@ -211,13 +206,13 @@
         window.location.href = game.url;
       }
     }, 180);
+    return true;
   }
 
   // ---------- events ----------
   function onClick(e) {
     const t = e.target;
 
-    // Filters
     const chip = t.closest('[data-filter]');
     if (chip && els.filterBar.contains(chip)) {
       activeFilter = chip.dataset.filter;
@@ -226,34 +221,29 @@
       return;
     }
 
-    // Featured play CTA
     const playNow = t.closest('[data-play]');
     if (playNow) {
       e.stopPropagation();
-      const g = byId(playNow.dataset.play);
+      const g = _byId(playNow.dataset.play);
       if (g) playGame(g);
       return;
     }
 
-    // Featured card body → sheet
     if (t.closest('#featured') && !t.closest('[data-play]')) {
-      const g = byId(els.featured.dataset.id);
+      const g = _byId(els.featured.dataset.id);
       if (g) openSheet(g);
       return;
     }
 
-    // Game cards / recent
     const card = t.closest('[data-id]');
     if (card && (els.gameGrid.contains(card) || els.recentRow.contains(card))) {
-      const g = byId(card.dataset.id);
+      const g = _byId(card.dataset.id);
       if (!g) return;
-      // Recent chips launch immediately; library cards open detail sheet.
       if (els.recentRow.contains(card)) playGame(g);
       else openSheet(g);
       return;
     }
 
-    // Sheet controls
     if (t === els.sheetClose || t === els.sheetBackdrop) {
       closeSheet();
       return;
@@ -274,7 +264,7 @@
     }
     if ((e.key === 'Enter' || e.key === ' ') && document.activeElement === els.featured) {
       e.preventDefault();
-      const g = byId(els.featured.dataset.id);
+      const g = _byId(els.featured.dataset.id);
       if (g) openSheet(g);
     }
   }
@@ -305,7 +295,6 @@
       toast('Installed on your home screen');
     });
 
-    // iOS hint: standalone check
     const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches
       || navigator.standalone === true;
@@ -404,6 +393,10 @@
       const res = await fetch('./games.json', { cache: 'no-cache' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
+      if (typeof validateCatalog === 'function') {
+        const v = validateCatalog(data);
+        if (!v.ok) console.warn('[hub] catalog issues:', v.errors);
+      }
       games = Array.isArray(data.games) ? data.games : [];
       if (data.hub?.tagline) els.tagline.textContent = data.hub.tagline;
       if (data.hub?.name) document.title = data.hub.name;
