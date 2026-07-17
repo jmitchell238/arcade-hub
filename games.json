@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "hub": {
+    "name": "Arcade Hub",
+    "tagline": "All your games. One place."
+  },
+  "games": [
+    {
+      "id": "voidrush",
+      "title": "VoidRush",
+      "subtitle": "Swallow the whole map",
+      "description": "Steer your hole and devour everything that fits — cars, houses, skyscrapers. Grow bigger than rival holes before the timer hits zero.",
+      "url": "https://jmitchell238.github.io/hole-game/",
+      "cover": "art/covers/voidrush.jpg",
+      "accent": "#58d68d",
+      "tags": ["3D", "Action", "Arena"],
+      "featured": true,
+      "repo": "hole-game"
+    },
+    {
+      "id": "crowd-clash",
+      "title": "Crowd Clash Runner",
+      "subtitle": "Grow your crowd, smash the gates",
+      "description": "Steer your crowd through power gates, dodge hazards, grab crates, and race for the finish. Casual endless-runner energy with shop upgrades.",
+      "url": "https://jmitchell238.github.io/crowd-runner/",
+      "cover": "art/covers/crowd-clash.jpg",
+      "accent": "#ffd23e",
+      "tags": ["Runner", "Casual", "Arcade"],
+      "featured": false,
+      "repo": "crowd-runner"
+    }
+  ]
+}
