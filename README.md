@@ -147,3 +147,4 @@ The hub shell (UI + covers) works offline once visited. Individual games still n
 - [Neon Autofire](https://jmitchell238.github.io/neon-autofire/) (`neon-autofire`)
 - [Ironvale](https://jmitchell238.github.io/ironvale/) (`ironvale`)
 - [Bottle Sort](https://jmitchell238.github.io/bottle-sort/) (`bottle-sort`)
+- [Maze Adventure](https://jmitchell238.github.io/maze-adventure/) (`maze-adventure`)
