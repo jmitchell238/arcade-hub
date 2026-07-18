@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.006"
+    "appVersion": "1.1.007"
   },
   "games": [
     {
@@ -65,6 +65,18 @@
       "tags": ["Platformer", "Action", "Medieval"],
       "featured": false,
       "repo": "ironvale"
+    },
+    {
+      "id": "bottle-sort",
+      "title": "Bottle Sort",
+      "subtitle": "Pour. Match. Sort every bottle.",
+      "description": "Classic water-sort puzzle with neon glass bottles. Tap to pour glowing liquids until every bottle is a solid color. Levels randomize bottle count and colors — early boards are cozy, later ones get wild.",
+      "url": "https://jmitchell238.github.io/bottle-sort/",
+      "cover": "art/covers/bottle-sort.jpg",
+      "accent": "#3de7ff",
+      "tags": ["Puzzle", "Casual", "Sort"],
+      "featured": false,
+      "repo": "bottle-sort"
     }
   ]
 }
