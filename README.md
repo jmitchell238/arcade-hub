@@ -146,3 +146,4 @@ The hub shell (UI + covers) works offline once visited. Individual games still n
 - [Drop & Fuse](https://jmitchell238.github.io/drop-and-fuse/) (`drop-and-fuse`)
 - [Neon Autofire](https://jmitchell238.github.io/neon-autofire/) (`neon-autofire`)
 - [Ironvale](https://jmitchell238.github.io/ironvale/) (`ironvale`)
+- [Bottle Sort](https://jmitchell238.github.io/bottle-sort/) (`bottle-sort`)
