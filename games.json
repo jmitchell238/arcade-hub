@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.018"
+    "appVersion": "1.1.019"
   },
   "games": [
     {
@@ -225,6 +225,23 @@
       ],
       "featured": false,
       "repo": "shape-train",
+      "version": "1.0.000"
+    },
+    {
+      "id": "dress-up-dino",
+      "title": "Dress-Up Dino",
+      "subtitle": "Tap \u00b7 style \u00b7 roar",
+      "description": "Dress a friendly dino with hats, scarves, glasses, and spots. Save favorite outfits and show off with confetti. Creative free play for ages 4\u20136 \u2014 no fail screens.",
+      "url": "https://jmitchell238.github.io/dress-up-dino/",
+      "cover": "art/covers/dress-up-dino.jpg",
+      "accent": "#ce93d8",
+      "tags": [
+        "Kids",
+        "Casual",
+        "Touch"
+      ],
+      "featured": false,
+      "repo": "dress-up-dino",
       "version": "1.0.000"
     }
   ]
