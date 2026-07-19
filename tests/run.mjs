@@ -225,7 +225,8 @@ section('PWA shell + HTML');
   const app = read('js/app.js');
   assert(app.includes('formatGameVersion') || app.includes('_formatGameVersion'),
     'app formats game versions');
-  assert(app.includes('card-version'), 'cards render version badge class');
+  assert(app.includes('sheetVersion'), 'sheet version element is wired');
+  assert(!app.includes('card-version'), 'version badge is not on library cards');
   assert(app.includes('game.version') || app.includes('g.version'),
     'app reads game.version from catalog');
 

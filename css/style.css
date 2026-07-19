@@ -261,14 +261,6 @@ button, a { font-family: inherit; }
   max-width: 520px;
 }
 
-.featured-badges {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  align-self: flex-start;
-}
-
 .badge {
   display: inline-flex;
   align-self: flex-start;
@@ -283,30 +275,26 @@ button, a { font-family: inherit; }
   color: var(--cyan);
 }
 
-/* Shared game version pill (cards, featured, sheet) */
+/* Game version pill — only on the detail sheet (not library cards) */
 .game-version {
   display: inline-flex;
   align-items: center;
+  margin: 0;
   font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  padding: 4px 8px;
+  padding: 6px 11px;
   border-radius: 999px;
-  background: rgba(7, 11, 22, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #e8edff;
+  background: rgba(7, 11, 22, 0.78);
+  border: 1px solid rgba(255, 213, 106, 0.45);
+  color: var(--gold);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   line-height: 1.2;
   white-space: nowrap;
-}
-
-.featured-version {
-  background: rgba(7, 11, 22, 0.55);
-  border-color: rgba(255, 213, 106, 0.45);
-  color: var(--gold);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .featured-content h3 {
@@ -452,16 +440,7 @@ button, a { font-family: inherit; }
   background: linear-gradient(to top, rgba(7, 11, 22, 0.85), transparent);
 }
 
-.card-version {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  z-index: 2;
-  pointer-events: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-  color: color-mix(in srgb, var(--card-accent, var(--cyan)) 70%, #fff);
-  border-color: color-mix(in srgb, var(--card-accent, var(--cyan)) 40%, rgba(255, 255, 255, 0.15));
-}
+
 
 .card-play {
   position: absolute;
@@ -680,6 +659,16 @@ button, a { font-family: inherit; }
   inset: auto 0 0;
   height: 50%;
   background: linear-gradient(to top, var(--panel), transparent);
+  pointer-events: none;
+}
+
+/* Version sits at the top of the detail sheet cover (not on library cards) */
+.sheet-version {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  max-width: calc(100% - 64px); /* leave room for close button */
 }
 
 .sheet-body {
@@ -701,14 +690,6 @@ button, a { font-family: inherit; }
   font-weight: 900;
   letter-spacing: -0.02em;
   line-height: 1.1;
-}
-
-.sheet-version {
-  margin: 0 0 4px;
-  align-self: flex-start;
-  color: var(--gold);
-  border-color: rgba(255, 213, 106, 0.35);
-  background: rgba(255, 213, 106, 0.1);
 }
 
 .sheet-sub {

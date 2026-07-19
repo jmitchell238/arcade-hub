@@ -66,7 +66,8 @@ Games themselves stay on their own repos/Pages. This hub only links to them.
 }
 ```
 
-Set `"version"` to the game’s `GAME_VERSION` so library cards show e.g. `v1.2.003`.
+Set `"version"` to the game’s `GAME_VERSION` so the detail sheet shows e.g. `v1.2.003`
+(top of the bottom sheet when you tap a game — not on the library cover cards).
 
 4. List the new cover (and any new asset) in `sw.js` → `ASSETS`, and bump the `CACHE` string so clients pick it up.
 5. Commit, push, wait for Pages to rebuild.
