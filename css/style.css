@@ -275,7 +275,7 @@ button, a { font-family: inherit; }
   color: var(--cyan);
 }
 
-/* Game version pill — only on the detail sheet (not library cards) */
+/* Game version pill — library cards + detail sheet (live GAME_VERSION) */
 .game-version {
   display: inline-flex;
   align-items: center;
@@ -295,6 +295,16 @@ button, a { font-family: inherit; }
   line-height: 1.2;
   white-space: nowrap;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.card-version {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  font-size: 0.68rem;
+  padding: 4px 8px;
+  pointer-events: none;
 }
 
 .featured-content h3 {
