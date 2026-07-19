@@ -159,3 +159,4 @@ The hub shell (UI + covers) works offline once visited. Individual games still n
 - [Treasure Dig](https://jmitchell238.github.io/treasure-dig/) (`treasure-dig`)
 - [Shape Train](https://jmitchell238.github.io/shape-train/) (`shape-train`)
 - [Dress-Up Dino](https://jmitchell238.github.io/dress-up-dino/) (`dress-up-dino`)
+- [Number Caterpillar](https://jmitchell238.github.io/number-caterpillar/) (`number-caterpillar`)

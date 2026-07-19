@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.021"
+    "appVersion": "1.1.022"
   },
   "games": [
     {
@@ -243,6 +243,23 @@
       "featured": false,
       "repo": "dress-up-dino",
       "version": "1.0.002"
+    },
+    {
+      "id": "number-caterpillar",
+      "title": "Number Caterpillar",
+      "subtitle": "Tap \u00b7 count \u00b7 grow",
+      "description": "Tap numbers in order 1\u21922\u21923\u2026 and grow a friendly caterpillar. Finish the chain for a butterfly celebration. Soft counting fun for ages 4\u20136 \u2014 no fail screens.",
+      "url": "https://jmitchell238.github.io/number-caterpillar/",
+      "cover": "art/covers/number-caterpillar.jpg",
+      "accent": "#7cb342",
+      "tags": [
+        "Kids",
+        "Casual",
+        "Touch"
+      ],
+      "featured": false,
+      "repo": "number-caterpillar",
+      "version": "1.0.000"
     }
   ]
 }
