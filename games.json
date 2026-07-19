@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.020"
+    "appVersion": "1.1.021"
   },
   "games": [
     {
@@ -242,7 +242,7 @@
       ],
       "featured": false,
       "repo": "dress-up-dino",
-      "version": "1.0.001"
+      "version": "1.0.002"
     }
   ]
 }
