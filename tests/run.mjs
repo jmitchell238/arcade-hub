@@ -58,6 +58,12 @@ section('catalog helpers');
     '&lt;script&gt;&quot;&amp;&lt;/script&gt;',
     'escapeHtml escapes XSS-prone chars');
 
+  assertEq(cat.formatGameVersion('1.2.003'), 'v1.2.003', 'formatGameVersion prefixes v');
+  assertEq(cat.formatGameVersion('v2.0.0'), 'v2.0.0', 'formatGameVersion keeps existing v');
+  assertEq(cat.formatGameVersion(''), '', 'formatGameVersion empty');
+  assertEq(cat.formatGameVersion(null), '', 'formatGameVersion null');
+  assertEq(cat.formatGameVersion('not-a-version'), '', 'formatGameVersion rejects junk');
+
   const games = [
     { id: 'a', title: 'A', tags: ['Puzzle', 'Casual'] },
     { id: 'b', title: 'B', tags: ['Action'] },
@@ -154,7 +160,7 @@ section('games.json integrity');
     assert(ids.includes(id), `catalog includes ${id}`);
   }
 
-  // covers exist on disk; URLs look like github pages
+  // covers exist on disk; URLs look like github pages; versions shown on cards
   for (const g of data.games) {
     if (g.cover) {
       assert(exists(g.cover), `cover exists: ${g.cover}`);
@@ -163,6 +169,10 @@ section('games.json integrity');
       `${g.id} links to github pages: ${g.url}`);
     // hub only links — cover must not embed game code
     assert(!g.bundle && !g.embed, `${g.id} is a link entry (not bundled)`);
+    assert(typeof g.version === 'string' && g.version.trim(),
+      `${g.id} has catalog version for card badge`);
+    assert(!!cat.formatGameVersion(g.version),
+      `${g.id} version formats for UI: ${g.version}`);
   }
 
   const featured = data.games.filter(g => g.featured);
@@ -209,7 +219,15 @@ section('PWA shell + HTML');
   assert(html.includes('id="versionLine"'), 'versionLine footer');
   assert(html.includes('id="gameGrid"'), 'game grid');
   assert(html.includes('id="playBtn"'), 'play button in sheet');
+  assert(html.includes('id="sheetVersion"'), 'sheet version element');
   assert(html.includes('apple-mobile-web-app-capable'), 'iOS PWA meta');
+
+  const app = read('js/app.js');
+  assert(app.includes('formatGameVersion') || app.includes('_formatGameVersion'),
+    'app formats game versions');
+  assert(app.includes('card-version'), 'cards render version badge class');
+  assert(app.includes('game.version') || app.includes('g.version'),
+    'app reads game.version from catalog');
 
   assertEq(man.display, 'standalone', 'manifest standalone');
   assert(Array.isArray(man.icons) && man.icons.length >= 2, 'manifest has icons');

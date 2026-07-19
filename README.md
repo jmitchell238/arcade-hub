@@ -61,9 +61,12 @@ Games themselves stay on their own repos/Pages. This hub only links to them.
   "accent": "#ff8c42",
   "tags": ["Action", "Puzzle"],
   "featured": false,
-  "repo": "my-new-game"
+  "repo": "my-new-game",
+  "version": "1.0.000"
 }
 ```
+
+Set `"version"` to the game’s `GAME_VERSION` so library cards show e.g. `v1.2.003`.
 
 4. List the new cover (and any new asset) in `sw.js` → `ASSETS`, and bump the `CACHE` string so clients pick it up.
 5. Commit, push, wait for Pages to rebuild.
