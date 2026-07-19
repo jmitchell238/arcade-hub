@@ -158,3 +158,4 @@ The hub shell (UI + covers) works offline once visited. Individual games still n
 - [Hide & Seek Rooms](https://jmitchell238.github.io/hide-seek-rooms/) (`hide-seek-rooms`)
 - [Treasure Dig](https://jmitchell238.github.io/treasure-dig/) (`treasure-dig`)
 - [Shape Train](https://jmitchell238.github.io/shape-train/) (`shape-train`)
+- [Dress-Up Dino](https://jmitchell238.github.io/dress-up-dino/) (`dress-up-dino`)
