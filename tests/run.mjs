@@ -64,6 +64,38 @@ section('catalog helpers');
   assertEq(cat.formatGameVersion(null), '', 'formatGameVersion null');
   assertEq(cat.formatGameVersion('not-a-version'), '', 'formatGameVersion rejects junk');
 
+  // Live version probing helpers
+  const probes = cat.versionProbeUrls({ url: 'https://jmitchell238.github.io/hole-game/' });
+  assert(probes[0].endsWith('/js/config.js'), 'probe default config.js');
+  assert(probes.some(u => u.endsWith('/js/config/index.js')), 'probe config/index.js');
+  assertEq(cat.versionProbeUrls({ url: 'http://bad/' }).length, 0, 'reject non-https probe');
+  const custom = cat.versionProbeUrls({
+    url: 'https://jmitchell238.github.io/x/',
+    versionFile: 'app/version.js',
+  });
+  assertEq(custom.join(','), 'https://jmitchell238.github.io/x/app/version.js', 'custom versionFile');
+
+  assertEq(
+    cat.parseGameVersionFromSource("const GAME_VERSION = '2.43.014';"),
+    '2.43.014',
+    'parse GAME_VERSION'
+  );
+  assertEq(
+    cat.parseGameVersionFromSource("export const GAME_VERSION = '1.2.006';"),
+    '1.2.006',
+    'parse export GAME_VERSION'
+  );
+  assertEq(
+    cat.parseGameVersionFromSource("const HUB_VERSION = '1.1.000';"),
+    '1.1.000',
+    'parse HUB_VERSION fallback'
+  );
+  assertEq(cat.parseGameVersionFromSource('// no version here'), null, 'parse missing');
+  // Prefer live over stale catalog
+  assertEq(cat.resolveDisplayVersion('2.43.005', '2.43.014'), 'v2.43.014', 'live wins over catalog');
+  assertEq(cat.resolveDisplayVersion('1.0.000', null), 'v1.0.000', 'catalog fallback');
+  assertEq(cat.resolveDisplayVersion(null, null), '', 'empty when neither');
+
   const games = [
     { id: 'a', title: 'A', tags: ['Puzzle', 'Casual'] },
     { id: 'b', title: 'B', tags: ['Action'] },
@@ -169,10 +201,15 @@ section('games.json integrity');
       `${g.id} links to github pages: ${g.url}`);
     // hub only links — cover must not embed game code
     assert(!g.bundle && !g.embed, `${g.id} is a link entry (not bundled)`);
-    assert(typeof g.version === 'string' && g.version.trim(),
-      `${g.id} has catalog version for card badge`);
-    assert(!!cat.formatGameVersion(g.version),
-      `${g.id} version formats for UI: ${g.version}`);
+    // Catalog version is optional fallback; live GAME_VERSION is preferred at runtime
+    if (g.version != null) {
+      assert(typeof g.version === 'string' && g.version.trim(),
+        `${g.id} catalog version is non-empty string when present`);
+      assert(!!cat.formatGameVersion(g.version),
+        `${g.id} catalog version formats for UI: ${g.version}`);
+    }
+    assert(cat.versionProbeUrls(g).length >= 1,
+      `${g.id} has version probe URLs from game url`);
   }
 
   const featured = data.games.filter(g => g.featured);
@@ -226,9 +263,11 @@ section('PWA shell + HTML');
   assert(app.includes('formatGameVersion') || app.includes('_formatGameVersion'),
     'app formats game versions');
   assert(app.includes('sheetVersion'), 'sheet version element is wired');
-  assert(!app.includes('card-version'), 'version badge is not on library cards');
-  assert(app.includes('game.version') || app.includes('g.version'),
-    'app reads game.version from catalog');
+  assert(app.includes('card-version'), 'version badge is on library cards');
+  assert(app.includes('hydrateLiveVersions') || app.includes('fetchLiveVersion'),
+    'app hydrates live GAME_VERSION from each game');
+  assert(app.includes('liveVersion') || app.includes('parseGameVersionFromSource'),
+    'app prefers live version over catalog');
 
   assertEq(man.display, 'standalone', 'manifest standalone');
   assert(Array.isArray(man.icons) && man.icons.length >= 2, 'manifest has icons');

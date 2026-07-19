@@ -32,6 +32,59 @@ function formatGameVersion(version) {
   return `v${m[1]}`;
 }
 
+/**
+ * Candidate URLs to probe for a game's GAME_VERSION (relative to its Pages root).
+ * Optional game.versionFile overrides the default list (single path or array).
+ * @param {{ url?: string, versionFile?: string|string[] }} game
+ * @returns {string[]}
+ */
+function versionProbeUrls(game) {
+  const base = String(game && game.url || '').replace(/\/?$/, '/');
+  if (!/^https:\/\//i.test(base)) return [];
+  let files = game && game.versionFile;
+  if (typeof files === 'string' && files.trim()) files = [files.trim()];
+  if (!Array.isArray(files) || !files.length) {
+    files = ['js/config.js', 'js/config/index.js'];
+  }
+  return files.map(f => {
+    const rel = String(f).replace(/^\.\//, '').replace(/^\//, '');
+    return base + rel;
+  });
+}
+
+/**
+ * Extract GAME_VERSION (preferred) or HUB_VERSION from a JS source file.
+ * Returns the bare version string (no leading "v"), or null.
+ * @param {string} text
+ * @returns {string|null}
+ */
+function parseGameVersionFromSource(text) {
+  if (!text || typeof text !== 'string') return null;
+  const patterns = [
+    /(?:const|let|var)\s+GAME_VERSION\s*=\s*['"]([^'"]+)['"]/,
+    /GAME_VERSION\s*=\s*['"]([^'"]+)['"]/,
+    /(?:const|let|var)\s+HUB_VERSION\s*=\s*['"]([^'"]+)['"]/,
+    /export\s+const\s+GAME_VERSION\s*=\s*['"]([^'"]+)['"]/,
+  ];
+  for (const re of patterns) {
+    const m = text.match(re);
+    if (!m) continue;
+    const raw = String(m[1]).trim().replace(/^v/i, '');
+    if (formatGameVersion(raw)) return raw;
+  }
+  return null;
+}
+
+/**
+ * Prefer a live-probed version over the static catalog fallback.
+ * @param {unknown} catalogVersion - games.json entry
+ * @param {unknown} liveVersion - fetched from the game
+ * @returns {string} formatted "vX.Y.Z" or ""
+ */
+function resolveDisplayVersion(catalogVersion, liveVersion) {
+  return formatGameVersion(liveVersion) || formatGameVersion(catalogVersion) || '';
+}
+
 function allTags(games) {
   const set = new Set();
   for (const g of games || []) {
@@ -144,6 +197,9 @@ if (typeof module !== 'undefined' && module.exports) {
     RECENT_MAX_DEFAULT,
     escapeHtml,
     formatGameVersion,
+    versionProbeUrls,
+    parseGameVersionFromSource,
+    resolveDisplayVersion,
     allTags,
     filteredGames,
     byId,

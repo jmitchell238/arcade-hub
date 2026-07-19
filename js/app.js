@@ -54,6 +54,22 @@
       if (!s) return '';
       return s.charAt(0) === 'v' || s.charAt(0) === 'V' ? s : `v${s}`;
     };
+  const _versionProbeUrls = typeof versionProbeUrls === 'function'
+    ? versionProbeUrls
+    : (g) => {
+      const base = String(g && g.url || '').replace(/\/?$/, '/');
+      if (!/^https:\/\//i.test(base)) return [];
+      return [base + 'js/config.js', base + 'js/config/index.js'];
+    };
+  const _parseGameVersionFromSource = typeof parseGameVersionFromSource === 'function'
+    ? parseGameVersionFromSource
+    : (text) => {
+      const m = String(text || '').match(/GAME_VERSION\s*=\s*['"]([^'"]+)['"]/);
+      return m ? m[1].replace(/^v/i, '') : null;
+    };
+  const _resolveDisplayVersion = typeof resolveDisplayVersion === 'function'
+    ? resolveDisplayVersion
+    : (catalog, live) => _formatGameVersion(live) || _formatGameVersion(catalog) || '';
   const _allTags = typeof allTags === 'function'
     ? () => allTags(games)
     : () => {
@@ -128,11 +144,16 @@
     const tags = (g.tags || []).slice(0, 3)
       .map(t => `<span class="tag">${_escapeHtml(t)}</span>`).join('');
     const delay = Math.min(index * 40, 280);
+    const ver = _resolveDisplayVersion(g.version, g.liveVersion);
+    const verHtml = ver
+      ? `<span class="card-version game-version" data-version-for="${_escapeHtml(g.id)}">${_escapeHtml(ver)}</span>`
+      : `<span class="card-version game-version hidden" data-version-for="${_escapeHtml(g.id)}"></span>`;
     return `
       <button type="button" class="game-card" role="listitem" data-id="${_escapeHtml(g.id)}"
         style="--card-accent:${_escapeHtml(g.accent || '#3de7ff')}; animation-delay:${delay}ms"
         aria-label="${_escapeHtml(g.title)}">
         <div class="card-cover" style="background-image:url('${_escapeHtml(g.cover || '')}')">
+          ${verHtml}
           <span class="card-play" aria-hidden="true">▶</span>
         </div>
         <div class="card-meta">
@@ -185,7 +206,8 @@
     els.sheetTitle.textContent = game.title;
     els.sheetSub.textContent = game.subtitle || '';
     els.sheetDesc.textContent = game.description || '';
-    const ver = _formatGameVersion(game.version);
+    // Prefer live GAME_VERSION from the game; catalog version is fallback only
+    const ver = _resolveDisplayVersion(game.version, game.liveVersion);
     if (els.sheetVersion) {
       if (ver) {
         els.sheetVersion.textContent = ver;
@@ -395,6 +417,60 @@
     setInterval(checkRemoteVersion, 2 * 60 * 1000);
   }
 
+  // ---------- live game versions (from each game's GAME_VERSION) ----------
+  function paintVersionBadges(game) {
+    const ver = _resolveDisplayVersion(game.version, game.liveVersion);
+    document.querySelectorAll(`[data-version-for="${game.id}"]`).forEach(el => {
+      if (ver) {
+        el.textContent = ver;
+        el.classList.remove('hidden');
+      } else {
+        el.textContent = '';
+        el.classList.add('hidden');
+      }
+    });
+    // Detail sheet open for this game
+    if (activeGame && activeGame.id === game.id && els.sheetVersion) {
+      if (ver) {
+        els.sheetVersion.textContent = ver;
+        els.sheetVersion.classList.remove('hidden');
+      } else {
+        els.sheetVersion.textContent = '';
+        els.sheetVersion.classList.add('hidden');
+      }
+    }
+  }
+
+  async function fetchLiveVersion(game) {
+    const urls = _versionProbeUrls(game);
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, { cache: 'no-store', mode: 'cors' });
+        if (!res.ok) continue;
+        const text = await res.text();
+        const ver = _parseGameVersionFromSource(text);
+        if (ver) {
+          game.liveVersion = ver;
+          return ver;
+        }
+      } catch {
+        /* try next probe path */
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Probe every catalog game for its live GAME_VERSION and refresh badges.
+   * Catalog `version` is only a fallback until (or if) the probe fails.
+   */
+  async function hydrateLiveVersions() {
+    await Promise.all(games.map(async (g) => {
+      await fetchLiveVersion(g);
+      paintVersionBadges(g);
+    }));
+  }
+
   // ---------- boot ----------
   async function boot() {
     applyVersionLabels();
@@ -426,6 +502,8 @@
     }
 
     renderAll();
+    // Source of truth: each game's GAME_VERSION (not the stale games.json copy)
+    hydrateLiveVersions();
   }
 
   if (document.readyState === 'loading') {
