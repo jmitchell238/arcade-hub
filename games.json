@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.013"
+    "appVersion": "1.1.014"
   },
   "games": [
     {
@@ -121,6 +121,19 @@
       "tags": ["Kids", "Casual", "Touch"],
       "featured": false,
       "repo": "bubble-pop-garden",
+      "version": "1.0.000"
+    },
+    {
+      "id": "color-match-pond",
+      "title": "Color Match Pond",
+      "subtitle": "Drag · match · splash",
+      "description": "Drag frogs, ducks, fish, and turtles onto matching lily pads. Soft color matching for ages 4–6 — wrong pads bounce home gently with a hint, never a fail screen.",
+      "url": "https://jmitchell238.github.io/color-match-pond/",
+      "cover": "art/covers/color-match-pond.jpg",
+      "accent": "#4fc3f7",
+      "tags": ["Kids", "Casual", "Touch"],
+      "featured": false,
+      "repo": "color-match-pond",
       "version": "1.0.000"
     }
   ]
