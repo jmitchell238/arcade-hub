@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.025"
+    "appVersion": "1.1.026"
   },
   "games": [
     {
@@ -259,7 +259,7 @@
       ],
       "featured": false,
       "repo": "number-caterpillar",
-      "version": "1.0.001"
+      "version": "1.0.002"
     }
   ]
 }
