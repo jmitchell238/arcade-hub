@@ -107,26 +107,16 @@
       els.featured.classList.add('hidden');
       return;
     }
-    const ver = _formatGameVersion(featured.version);
-    const verBadge = ver
-      ? `<span class="game-version featured-version" title="Game version">${_escapeHtml(ver)}</span>`
-      : '';
     els.featured.classList.remove('hidden');
     els.featured.tabIndex = 0;
     els.featured.setAttribute('role', 'button');
-    els.featured.setAttribute(
-      'aria-label',
-      ver ? `Featured: ${featured.title} ${ver}` : `Featured: ${featured.title}`,
-    );
+    els.featured.setAttribute('aria-label', `Featured: ${featured.title}`);
     els.featured.dataset.id = featured.id;
     els.featured.innerHTML = `
       <div class="featured-bg" style="background-image:url('${_escapeHtml(featured.cover || '')}')"></div>
       <div class="featured-shade"></div>
       <div class="featured-content">
-        <div class="featured-badges">
-          <span class="badge">Featured</span>
-          ${verBadge}
-        </div>
+        <span class="badge">Featured</span>
         <h3>${_escapeHtml(featured.title)}</h3>
         <p>${_escapeHtml(featured.subtitle || featured.description || '')}</p>
         <button type="button" class="featured-cta" data-play="${_escapeHtml(featured.id)}">▶  Play now</button>
@@ -137,20 +127,12 @@
   function cardHtml(g, index) {
     const tags = (g.tags || []).slice(0, 3)
       .map(t => `<span class="tag">${_escapeHtml(t)}</span>`).join('');
-    const ver = _formatGameVersion(g.version);
-    const verBadge = ver
-      ? `<span class="game-version card-version" title="Game version">${_escapeHtml(ver)}</span>`
-      : '';
     const delay = Math.min(index * 40, 280);
-    const aria = ver
-      ? `${g.title}, version ${ver}`
-      : g.title;
     return `
       <button type="button" class="game-card" role="listitem" data-id="${_escapeHtml(g.id)}"
         style="--card-accent:${_escapeHtml(g.accent || '#3de7ff')}; animation-delay:${delay}ms"
-        aria-label="${_escapeHtml(aria)}">
+        aria-label="${_escapeHtml(g.title)}">
         <div class="card-cover" style="background-image:url('${_escapeHtml(g.cover || '')}')">
-          ${verBadge}
           <span class="card-play" aria-hidden="true">▶</span>
         </div>
         <div class="card-meta">
