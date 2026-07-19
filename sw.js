@@ -1,6 +1,6 @@
 // Arcade Hub service worker — caches the launcher shell for instant/offline open.
 // Bump with HUB_VERSION / GAME_VERSION in js/config.js (MAJOR.MINOR.PATCH).
-const CACHE = 'arcade-hub-1.1.029';
+const CACHE = 'arcade-hub-1.1.030';
 
 const ASSETS = [
   './',
@@ -31,6 +31,7 @@ const ASSETS = [
   './art/covers/shape-train.jpg',
   './art/covers/dress-up-dino.jpg',
   './art/covers/number-caterpillar.jpg',
+  './art/covers/letter-picnic.jpg',
 ];
 
 function precacheAll(cache) {

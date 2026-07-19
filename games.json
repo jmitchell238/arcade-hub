@@ -3,14 +3,14 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.029"
+    "appVersion": "1.1.030"
   },
   "games": [
     {
       "id": "voidrush",
       "title": "VoidRush",
       "subtitle": "Swallow the whole map",
-      "description": "Steer your hole and devour everything that fits — cars, houses, skyscrapers. Grow bigger than rival holes before the timer hits zero.",
+      "description": "Steer your hole and devour everything that fits \u2014 cars, houses, skyscrapers. Grow bigger than rival holes before the timer hits zero.",
       "url": "https://jmitchell238.github.io/hole-game/",
       "cover": "art/covers/voidrush.jpg",
       "accent": "#58d68d",
@@ -43,8 +43,8 @@
     {
       "id": "drop-and-fuse",
       "title": "Drop & Fuse",
-      "subtitle": "Match orbs. Chain merges. Don’t overflow.",
-      "description": "Drop glowing orbs into the bin. Same sizes fuse into the next tier — chain big merges for high scores, but never cross the danger line.",
+      "subtitle": "Match orbs. Chain merges. Don\u2019t overflow.",
+      "description": "Drop glowing orbs into the bin. Same sizes fuse into the next tier \u2014 chain big merges for high scores, but never cross the danger line.",
       "url": "https://jmitchell238.github.io/drop-and-fuse/",
       "cover": "art/covers/drop-and-fuse.jpg",
       "accent": "#3de7ff",
@@ -78,7 +78,7 @@
       "id": "ironvale",
       "title": "Ironvale",
       "subtitle": "Run. Jump. Slash. Survive.",
-      "description": "Medieval 2D platformer. Play a knight through the realm of Ironvale — leap platforms, sword-slash slimes and bandits, collect gold XP, and pick blessings as waves grow harder.",
+      "description": "Medieval 2D platformer. Play a knight through the realm of Ironvale \u2014 leap platforms, sword-slash slimes and bandits, collect gold XP, and pick blessings as waves grow harder.",
       "url": "https://jmitchell238.github.io/ironvale/",
       "cover": "art/covers/ironvale.jpg",
       "accent": "#c9a227",
@@ -95,7 +95,7 @@
       "id": "bottle-sort",
       "title": "Bottle Sort",
       "subtitle": "Pour. Match. Sort every bottle.",
-      "description": "Classic water-sort puzzle with neon glass bottles. Tap to pour glowing liquids until every bottle is a solid color. Levels randomize bottle count and colors — early boards are cozy, later ones get wild.",
+      "description": "Classic water-sort puzzle with neon glass bottles. Tap to pour glowing liquids until every bottle is a solid color. Levels randomize bottle count and colors \u2014 early boards are cozy, later ones get wild.",
       "url": "https://jmitchell238.github.io/bottle-sort/",
       "cover": "art/covers/bottle-sort.jpg",
       "accent": "#3de7ff",
@@ -112,7 +112,7 @@
       "id": "maze-adventure",
       "title": "Maze Adventure",
       "subtitle": "Find the way. Have fun.",
-      "description": "Guide a cute explorer through colorful toy mazes. Every level is procedurally generated — Easy for little kids, up to Very Hard for big challenges. No lives, no fail screens, just explore and reach the star.",
+      "description": "Guide a cute explorer through colorful toy mazes. Every level is procedurally generated \u2014 Easy for little kids, up to Very Hard for big challenges. No lives, no fail screens, just explore and reach the star.",
       "url": "https://jmitchell238.github.io/maze-adventure/",
       "cover": "art/covers/maze-adventure.jpg",
       "accent": "#7dffa0",
@@ -128,8 +128,8 @@
     {
       "id": "animal-tap-zoo",
       "title": "Animal Tap Zoo",
-      "subtitle": "Tap · bounce · hear · celebrate",
-      "description": "Find the Lion! Spoken prompts, wandering animals, hearts, treats, and big celebrations. Side-view cartoon zoo friends across Savanna, Pond, Farm, and Forest. Zero fail — made for ages 4–6.",
+      "subtitle": "Tap \u00b7 bounce \u00b7 hear \u00b7 celebrate",
+      "description": "Find the Lion! Spoken prompts, wandering animals, hearts, treats, and big celebrations. Side-view cartoon zoo friends across Savanna, Pond, Farm, and Forest. Zero fail \u2014 made for ages 4\u20136.",
       "url": "https://jmitchell238.github.io/animal-tap-zoo/",
       "cover": "art/covers/animal-tap-zoo.jpg",
       "accent": "#7dffa0",
@@ -145,8 +145,8 @@
     {
       "id": "bubble-pop-garden",
       "title": "Bubble Pop Garden",
-      "subtitle": "Pop · sparkle · musical notes",
-      "description": "Pop colorful garden bubbles with sparkles and musical notes. Free Play for little hands, or gentle Pop 10 / Color Hunt missions for bigger kids. Zero fail — made for ages 4–6.",
+      "subtitle": "Pop \u00b7 sparkle \u00b7 musical notes",
+      "description": "Pop colorful garden bubbles with sparkles and musical notes. Free Play for little hands, or gentle Pop 10 / Color Hunt missions for bigger kids. Zero fail \u2014 made for ages 4\u20136.",
       "url": "https://jmitchell238.github.io/bubble-pop-garden/",
       "cover": "art/covers/bubble-pop-garden.jpg",
       "accent": "#7ec8e3",
@@ -162,8 +162,8 @@
     {
       "id": "color-match-pond",
       "title": "Color Match Pond",
-      "subtitle": "Drag · match · splash",
-      "description": "Drag frogs, ducks, fish, and turtles onto matching lily pads. Soft color matching for ages 4–6 — wrong pads bounce home gently with a hint, never a fail screen.",
+      "subtitle": "Drag \u00b7 match \u00b7 splash",
+      "description": "Drag frogs, ducks, fish, and turtles onto matching lily pads. Soft color matching for ages 4\u20136 \u2014 wrong pads bounce home gently with a hint, never a fail screen.",
       "url": "https://jmitchell238.github.io/color-match-pond/",
       "cover": "art/covers/color-match-pond.jpg",
       "accent": "#4fc3f7",
@@ -179,8 +179,8 @@
     {
       "id": "hide-seek-rooms",
       "title": "Hide & Seek Rooms",
-      "subtitle": "Peek · find · celebrate",
-      "description": "Find hidden toys in cozy rooms — bedroom, kitchen, playground, and more. Soft sparkle hints if you’re stuck. Zero fail — made for ages 4–6.",
+      "subtitle": "Peek \u00b7 find \u00b7 celebrate",
+      "description": "Find hidden toys in cozy rooms \u2014 bedroom, kitchen, playground, and more. Soft sparkle hints if you\u2019re stuck. Zero fail \u2014 made for ages 4\u20136.",
       "url": "https://jmitchell238.github.io/hide-seek-rooms/",
       "cover": "art/covers/hide-seek-rooms.jpg",
       "accent": "#f48fb1",
@@ -196,8 +196,8 @@
     {
       "id": "treasure-dig",
       "title": "Treasure Dig",
-      "subtitle": "Dig · sparkle · celebrate",
-      "description": "Tap sand tiles to dig up shells, stars, crabs, and coins. Soft beach treasure hunt for ages 4–6 — no bombs, no fail screens, sparkle hints if you’re stuck.",
+      "subtitle": "Dig \u00b7 sparkle \u00b7 celebrate",
+      "description": "Tap sand tiles to dig up shells, stars, crabs, and coins. Soft beach treasure hunt for ages 4\u20136 \u2014 no bombs, no fail screens, sparkle hints if you\u2019re stuck.",
       "url": "https://jmitchell238.github.io/treasure-dig/",
       "cover": "art/covers/treasure-dig.jpg",
       "accent": "#ffd54f",
@@ -213,8 +213,8 @@
     {
       "id": "shape-train",
       "title": "Shape Train",
-      "subtitle": "Drag · match · choo-choo",
-      "description": "Load circle, square, star, and more into matching train cars. Full train chugs away with a whistle. Soft shape matching for ages 4–6 — wrong drops bounce home gently.",
+      "subtitle": "Drag \u00b7 match \u00b7 choo-choo",
+      "description": "Load circle, square, star, and more into matching train cars. Full train chugs away with a whistle. Soft shape matching for ages 4\u20136 \u2014 wrong drops bounce home gently.",
       "url": "https://jmitchell238.github.io/shape-train/",
       "cover": "art/covers/shape-train.jpg",
       "accent": "#ef5350",
@@ -230,8 +230,8 @@
     {
       "id": "dress-up-dino",
       "title": "Dress-Up Dino",
-      "subtitle": "Tap · style · roar",
-      "description": "Dress a friendly dino with hats, scarves, glasses, and spots. Save favorite outfits and show off with confetti. Creative free play for ages 4–6 — no fail screens.",
+      "subtitle": "Tap \u00b7 style \u00b7 roar",
+      "description": "Dress a friendly dino with hats, scarves, glasses, and spots. Save favorite outfits and show off with confetti. Creative free play for ages 4\u20136 \u2014 no fail screens.",
       "url": "https://jmitchell238.github.io/dress-up-dino/",
       "cover": "art/covers/dress-up-dino.jpg",
       "accent": "#ce93d8",
@@ -247,8 +247,8 @@
     {
       "id": "number-caterpillar",
       "title": "Number Caterpillar",
-      "subtitle": "Tap · count · grow",
-      "description": "Tap numbers in order 1→2→3… and grow a friendly caterpillar. Finish the chain for a butterfly celebration. Soft counting fun for ages 4–6 — no fail screens.",
+      "subtitle": "Tap \u00b7 count \u00b7 grow",
+      "description": "Tap numbers in order 1\u21922\u21923\u2026 and grow a friendly caterpillar. Finish the chain for a butterfly celebration. Soft counting fun for ages 4\u20136 \u2014 no fail screens.",
       "url": "https://jmitchell238.github.io/number-caterpillar/",
       "cover": "art/covers/number-caterpillar.jpg",
       "accent": "#7cb342",
@@ -260,6 +260,23 @@
       "featured": false,
       "repo": "number-caterpillar",
       "version": "1.0.002"
+    },
+    {
+      "id": "letter-picnic",
+      "title": "Letter Picnic",
+      "subtitle": "Find \u00b7 munch \u00b7 celebrate",
+      "description": "Find the letter on a cozy picnic blanket \u2014 Find B! Spoken prompts, munch cheers, soft hints. Soft ABC fun for ages 4\u20136 \u2014 no fail screens.",
+      "url": "https://jmitchell238.github.io/letter-picnic/",
+      "cover": "art/covers/letter-picnic.jpg",
+      "accent": "#ef5350",
+      "tags": [
+        "Kids",
+        "Casual",
+        "Touch"
+      ],
+      "featured": false,
+      "repo": "letter-picnic",
+      "version": "1.0.000"
     }
   ]
 }
