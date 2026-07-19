@@ -155,3 +155,4 @@ The hub shell (UI + covers) works offline once visited. Individual games still n
 - [Animal Tap Zoo](https://jmitchell238.github.io/animal-tap-zoo/) (`animal-tap-zoo`)
 - [Bubble Pop Garden](https://jmitchell238.github.io/bubble-pop-garden/) (`bubble-pop-garden`)
 - [Color Match Pond](https://jmitchell238.github.io/color-match-pond/) (`color-match-pond`)
+- [Hide & Seek Rooms](https://jmitchell238.github.io/hide-seek-rooms/) (`hide-seek-rooms`)

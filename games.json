@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.015"
+    "appVersion": "1.1.016"
   },
   "games": [
     {
@@ -134,6 +134,19 @@
       "tags": ["Kids", "Casual", "Touch"],
       "featured": false,
       "repo": "color-match-pond",
+      "version": "1.0.000"
+    },
+    {
+      "id": "hide-seek-rooms",
+      "title": "Hide & Seek Rooms",
+      "subtitle": "Peek · find · celebrate",
+      "description": "Find hidden toys in cozy rooms — bedroom, kitchen, playground, and more. Soft sparkle hints if you’re stuck. Zero fail — made for ages 4–6.",
+      "url": "https://jmitchell238.github.io/hide-seek-rooms/",
+      "cover": "art/covers/hide-seek-rooms.jpg",
+      "accent": "#f48fb1",
+      "tags": ["Kids", "Casual", "Touch"],
+      "featured": false,
+      "repo": "hide-seek-rooms",
       "version": "1.0.000"
     }
   ]
