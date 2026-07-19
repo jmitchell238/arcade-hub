@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.009"
+    "appVersion": "1.1.010"
   },
   "games": [
     {
@@ -16,7 +16,8 @@
       "accent": "#58d68d",
       "tags": ["3D", "Action", "Arena"],
       "featured": true,
-      "repo": "hole-game"
+      "repo": "hole-game",
+      "version": "2.43.005"
     },
     {
       "id": "crowd-clash",
@@ -28,7 +29,8 @@
       "accent": "#ffd23e",
       "tags": ["Runner", "Casual", "Arcade"],
       "featured": false,
-      "repo": "crowd-runner"
+      "repo": "crowd-runner",
+      "version": "1.0.0"
     },
     {
       "id": "drop-and-fuse",
@@ -40,7 +42,8 @@
       "accent": "#3de7ff",
       "tags": ["Puzzle", "Merge", "Casual"],
       "featured": false,
-      "repo": "drop-and-fuse"
+      "repo": "drop-and-fuse",
+      "version": "1.0.004"
     },
     {
       "id": "neon-autofire",
@@ -52,7 +55,8 @@
       "accent": "#ff4fd8",
       "tags": ["Shooter", "Platformer", "Arcade"],
       "featured": false,
-      "repo": "neon-autofire"
+      "repo": "neon-autofire",
+      "version": "1.3.000"
     },
     {
       "id": "ironvale",
@@ -64,7 +68,8 @@
       "accent": "#c9a227",
       "tags": ["Platformer", "Action", "Medieval"],
       "featured": false,
-      "repo": "ironvale"
+      "repo": "ironvale",
+      "version": "1.4.100"
     },
     {
       "id": "bottle-sort",
@@ -76,7 +81,8 @@
       "accent": "#3de7ff",
       "tags": ["Puzzle", "Casual", "Sort"],
       "featured": false,
-      "repo": "bottle-sort"
+      "repo": "bottle-sort",
+      "version": "1.2.000"
     },
     {
       "id": "maze-adventure",
@@ -88,7 +94,8 @@
       "accent": "#7dffa0",
       "tags": ["Puzzle", "Kids", "Maze"],
       "featured": false,
-      "repo": "maze-adventure"
+      "repo": "maze-adventure",
+      "version": "1.2.003"
     }
   ]
 }

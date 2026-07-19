@@ -28,6 +28,7 @@
     sheetTags: $('#sheetTags'),
     sheetTitle: $('#sheetTitle'),
     sheetSub: $('#sheetSub'),
+    sheetVersion: $('#sheetVersion'),
     sheetDesc: $('#sheetDesc'),
     playBtn: $('#playBtn'),
     openNewTab: $('#openNewTab'),
@@ -45,6 +46,14 @@
   const _escapeHtml = typeof escapeHtml === 'function'
     ? escapeHtml
     : (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const _formatGameVersion = typeof formatGameVersion === 'function'
+    ? formatGameVersion
+    : (v) => {
+      if (v == null) return '';
+      const s = String(v).trim();
+      if (!s) return '';
+      return s.charAt(0) === 'v' || s.charAt(0) === 'V' ? s : `v${s}`;
+    };
   const _allTags = typeof allTags === 'function'
     ? () => allTags(games)
     : () => {
@@ -98,16 +107,26 @@
       els.featured.classList.add('hidden');
       return;
     }
+    const ver = _formatGameVersion(featured.version);
+    const verBadge = ver
+      ? `<span class="game-version featured-version" title="Game version">${_escapeHtml(ver)}</span>`
+      : '';
     els.featured.classList.remove('hidden');
     els.featured.tabIndex = 0;
     els.featured.setAttribute('role', 'button');
-    els.featured.setAttribute('aria-label', `Featured: ${featured.title}`);
+    els.featured.setAttribute(
+      'aria-label',
+      ver ? `Featured: ${featured.title} ${ver}` : `Featured: ${featured.title}`,
+    );
     els.featured.dataset.id = featured.id;
     els.featured.innerHTML = `
       <div class="featured-bg" style="background-image:url('${_escapeHtml(featured.cover || '')}')"></div>
       <div class="featured-shade"></div>
       <div class="featured-content">
-        <span class="badge">Featured</span>
+        <div class="featured-badges">
+          <span class="badge">Featured</span>
+          ${verBadge}
+        </div>
         <h3>${_escapeHtml(featured.title)}</h3>
         <p>${_escapeHtml(featured.subtitle || featured.description || '')}</p>
         <button type="button" class="featured-cta" data-play="${_escapeHtml(featured.id)}">▶  Play now</button>
@@ -118,12 +137,20 @@
   function cardHtml(g, index) {
     const tags = (g.tags || []).slice(0, 3)
       .map(t => `<span class="tag">${_escapeHtml(t)}</span>`).join('');
+    const ver = _formatGameVersion(g.version);
+    const verBadge = ver
+      ? `<span class="game-version card-version" title="Game version">${_escapeHtml(ver)}</span>`
+      : '';
     const delay = Math.min(index * 40, 280);
+    const aria = ver
+      ? `${g.title}, version ${ver}`
+      : g.title;
     return `
       <button type="button" class="game-card" role="listitem" data-id="${_escapeHtml(g.id)}"
         style="--card-accent:${_escapeHtml(g.accent || '#3de7ff')}; animation-delay:${delay}ms"
-        aria-label="${_escapeHtml(g.title)}">
+        aria-label="${_escapeHtml(aria)}">
         <div class="card-cover" style="background-image:url('${_escapeHtml(g.cover || '')}')">
+          ${verBadge}
           <span class="card-play" aria-hidden="true">▶</span>
         </div>
         <div class="card-meta">
@@ -176,6 +203,16 @@
     els.sheetTitle.textContent = game.title;
     els.sheetSub.textContent = game.subtitle || '';
     els.sheetDesc.textContent = game.description || '';
+    const ver = _formatGameVersion(game.version);
+    if (els.sheetVersion) {
+      if (ver) {
+        els.sheetVersion.textContent = ver;
+        els.sheetVersion.classList.remove('hidden');
+      } else {
+        els.sheetVersion.textContent = '';
+        els.sheetVersion.classList.add('hidden');
+      }
+    }
     els.playBtn.style.setProperty('--btn-accent', game.accent || '#58d68d');
     els.playBtn.dataset.accent = '1';
     els.openNewTab.href = game.url;

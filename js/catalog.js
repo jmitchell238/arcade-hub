@@ -16,6 +16,22 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;');
 }
 
+/**
+ * Format a catalog game version for UI badges (e.g. "1.2.003" → "v1.2.003").
+ * Returns empty string when missing / invalid so cards can omit the badge.
+ * @param {unknown} version
+ * @returns {string}
+ */
+function formatGameVersion(version) {
+  if (version == null) return '';
+  const s = String(version).trim();
+  if (!s) return '';
+  // Optional leading v; MAJOR.MINOR[.PATCH] with optional pre-release suffix
+  const m = s.match(/^v?(\d+\.\d+(?:\.\d+)?(?:[a-z0-9.-]*)?)$/i);
+  if (!m) return '';
+  return `v${m[1]}`;
+}
+
 function allTags(games) {
   const set = new Set();
   for (const g of games || []) {
@@ -96,6 +112,14 @@ function validateCatalog(data) {
       errors.push(`${prefix}.tags must be an array`);
     }
     if (g.featured === true) featuredCount += 1;
+
+    if (g.version != null) {
+      if (typeof g.version !== 'string' || !g.version.trim()) {
+        errors.push(`${prefix}.version must be a non-empty string`);
+      } else if (!formatGameVersion(g.version)) {
+        errors.push(`${prefix}.version looks invalid: ${g.version}`);
+      }
+    }
   });
 
   if (featuredCount > 1) {
@@ -119,6 +143,7 @@ if (typeof module !== 'undefined' && module.exports) {
     RECENT_KEY_DEFAULT,
     RECENT_MAX_DEFAULT,
     escapeHtml,
+    formatGameVersion,
     allTags,
     filteredGames,
     byId,
