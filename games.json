@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.017"
+    "appVersion": "1.1.018"
   },
   "games": [
     {
@@ -208,6 +208,23 @@
       ],
       "featured": false,
       "repo": "treasure-dig",
+      "version": "1.0.000"
+    },
+    {
+      "id": "shape-train",
+      "title": "Shape Train",
+      "subtitle": "Drag \u00b7 match \u00b7 choo-choo",
+      "description": "Load circle, square, star, and more into matching train cars. Full train chugs away with a whistle. Soft shape matching for ages 4\u20136 \u2014 wrong drops bounce home gently.",
+      "url": "https://jmitchell238.github.io/shape-train/",
+      "cover": "art/covers/shape-train.jpg",
+      "accent": "#ef5350",
+      "tags": [
+        "Kids",
+        "Casual",
+        "Touch"
+      ],
+      "featured": false,
+      "repo": "shape-train",
       "version": "1.0.000"
     }
   ]
