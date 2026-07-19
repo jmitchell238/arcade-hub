@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.022"
+    "appVersion": "1.1.023"
   },
   "games": [
     {
@@ -225,7 +225,7 @@
       ],
       "featured": false,
       "repo": "shape-train",
-      "version": "1.0.001"
+      "version": "1.0.002"
     },
     {
       "id": "dress-up-dino",
@@ -242,7 +242,7 @@
       ],
       "featured": false,
       "repo": "dress-up-dino",
-      "version": "1.0.002"
+      "version": "1.0.003"
     },
     {
       "id": "number-caterpillar",
@@ -259,7 +259,7 @@
       ],
       "featured": false,
       "repo": "number-caterpillar",
-      "version": "1.0.000"
+      "version": "1.0.001"
     }
   ]
 }
