@@ -282,7 +282,7 @@
       "id": "cozy-racers",
       "title": "Cozy Racers",
       "subtitle": "Steer \u00b7 collect \u00b7 celebrate",
-      "description": "Steer a cute kart down a sunny meadow road. Collect stars with soft friend racers \u2014 gentle bumps only, zero fail. Made for ages 4\u20136.",
+      "description": "Steer a cute kart down a sunny meadow road. Longer races, 1st-place wins for little racers \u2014 soft friends, zero fail. Made for ages 4\u20136.",
       "url": "https://jmitchell238.github.io/cozy-racers/",
       "cover": "art/covers/cozy-racers.jpg",
       "accent": "#66bb6a",
@@ -293,7 +293,7 @@
       ],
       "featured": false,
       "repo": "cozy-racers",
-      "version": "1.1.000"
+      "version": "1.2.000"
     }
   ]
 }
