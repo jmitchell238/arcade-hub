@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.012"
+    "appVersion": "1.1.013"
   },
   "games": [
     {
@@ -108,6 +108,19 @@
       "tags": ["Kids", "Casual", "Touch"],
       "featured": false,
       "repo": "animal-tap-zoo",
+      "version": "1.0.000"
+    },
+    {
+      "id": "bubble-pop-garden",
+      "title": "Bubble Pop Garden",
+      "subtitle": "Pop · sparkle · musical notes",
+      "description": "Pop colorful garden bubbles with sparkles and musical notes. Free Play for little hands, or gentle Pop 10 / Color Hunt missions for bigger kids. Zero fail — made for ages 4–6.",
+      "url": "https://jmitchell238.github.io/bubble-pop-garden/",
+      "cover": "art/covers/bubble-pop-garden.jpg",
+      "accent": "#7ec8e3",
+      "tags": ["Kids", "Casual", "Touch"],
+      "featured": false,
+      "repo": "bubble-pop-garden",
       "version": "1.0.000"
     }
   ]
