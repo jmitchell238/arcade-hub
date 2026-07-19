@@ -6,7 +6,7 @@
 //   minor — features (big UI, catalog systems)
 //   patch — bugfixes, polish, catalog asset tweaks
 // Keep CACHE in sw.js in sync: 'arcade-hub-' + HUB_VERSION
-const HUB_VERSION = '1.1.024';
+const HUB_VERSION = '1.1.025';
 const HUB_VERSION_LABEL = 'v' + HUB_VERSION;
 const HUB_NAME = 'Arcade Hub';
 // Alias so shared version-check patterns that look for GAME_VERSION still work
