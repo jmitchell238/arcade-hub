@@ -152,3 +152,4 @@ The hub shell (UI + covers) works offline once visited. Individual games still n
 - [Ironvale](https://jmitchell238.github.io/ironvale/) (`ironvale`)
 - [Bottle Sort](https://jmitchell238.github.io/bottle-sort/) (`bottle-sort`)
 - [Maze Adventure](https://jmitchell238.github.io/maze-adventure/) (`maze-adventure`)
+- [Animal Tap Zoo](https://jmitchell238.github.io/animal-tap-zoo/) (`animal-tap-zoo`)

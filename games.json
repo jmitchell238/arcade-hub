@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.011"
+    "appVersion": "1.1.012"
   },
   "games": [
     {
@@ -96,6 +96,19 @@
       "featured": false,
       "repo": "maze-adventure",
       "version": "1.2.003"
+    },
+    {
+      "id": "animal-tap-zoo",
+      "title": "Animal Tap Zoo",
+      "subtitle": "Tap · bounce · hear · celebrate",
+      "description": "Tap cute zoo animals for bounce, sounds, and confetti. Visit Savanna, Pond, Farm, and Forest. Zero fail — made for little kids ages 4–6. Big targets, short sessions, no lives or ads.",
+      "url": "https://jmitchell238.github.io/animal-tap-zoo/",
+      "cover": "art/covers/animal-tap-zoo.jpg",
+      "accent": "#7dffa0",
+      "tags": ["Kids", "Casual", "Touch"],
+      "featured": false,
+      "repo": "animal-tap-zoo",
+      "version": "1.0.000"
     }
   ]
 }
