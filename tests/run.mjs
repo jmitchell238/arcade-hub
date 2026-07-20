@@ -263,11 +263,17 @@ section('PWA shell + HTML');
   assert(app.includes('formatGameVersion') || app.includes('_formatGameVersion'),
     'app formats game versions');
   assert(app.includes('sheetVersion'), 'sheet version element is wired');
-  assert(app.includes('card-version'), 'version badge is on library cards');
+  // Versions belong on the detail sheet only (not library cards — they covered titles/art on iPad)
+  assert(!app.includes('card-version'), 'version badge is NOT on library cards');
+  assert(app.includes('sheet-cover-img') || app.includes('sheetCover'),
+    'sheet cover image path is wired');
+  assert(app.includes('card-cover-img'), 'library cards use <img> covers');
   assert(app.includes('hydrateLiveVersions') || app.includes('fetchLiveVersion'),
     'app hydrates live GAME_VERSION from each game');
   assert(app.includes('liveVersion') || app.includes('parseGameVersionFromSource'),
     'app prefers live version over catalog');
+  assert(app.includes('touchend') || app.includes('onTouchEnd'),
+    'touch handlers for iPad/iOS card taps');
 
   assertEq(man.display, 'standalone', 'manifest standalone');
   assert(Array.isArray(man.icons) && man.icons.length >= 2, 'manifest has icons');

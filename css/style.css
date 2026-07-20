@@ -41,6 +41,13 @@ body {
 
 button, a { font-family: inherit; }
 
+/* Faster taps on iOS; avoids 300ms double-tap-zoom wait on controls */
+button, a, .game-card, .filter-chip, .recent-chip, .featured-cta, .play-btn, .ghost-btn {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .hidden { display: none !important; }
 
 #versionTag {
@@ -231,11 +238,24 @@ button, a { font-family: inherit; }
 .featured-bg {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center 30%;
+  background-color: #12182a;
   transform: scale(1.02);
   transition: transform 0.45s ease;
   z-index: 0;
+  overflow: hidden;
+}
+
+.featured-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+  border: 0;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 #featured:hover .featured-bg { transform: scale(1.06); }
@@ -247,6 +267,7 @@ button, a { font-family: inherit; }
     linear-gradient(100deg, rgba(7, 11, 22, 0.92) 0%, rgba(7, 11, 22, 0.55) 48%, rgba(7, 11, 22, 0.2) 100%),
     linear-gradient(0deg, rgba(7, 11, 22, 0.75) 0%, transparent 50%);
   z-index: 1;
+  pointer-events: none;
 }
 
 .featured-content {
@@ -275,7 +296,7 @@ button, a { font-family: inherit; }
   color: var(--cyan);
 }
 
-/* Game version pill — library cards + detail sheet (live GAME_VERSION) */
+/* Game version pill — detail sheet only (not library cards) */
 .game-version {
   display: inline-flex;
   align-items: center;
@@ -295,16 +316,6 @@ button, a { font-family: inherit; }
   line-height: 1.2;
   white-space: nowrap;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-}
-
-.card-version {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  z-index: 2;
-  font-size: 0.68rem;
-  padding: 4px 8px;
-  pointer-events: none;
 }
 
 .featured-content h3 {
@@ -409,11 +420,13 @@ button, a { font-family: inherit; }
   text-align: left;
   padding: 0;
   color: inherit;
-  display: flex;
-  flex-direction: column;
+  /* CSS grid avoids WebKit flex+aspect-ratio collapse (0-height covers on iPad) */
+  display: grid;
+  grid-template-rows: auto auto;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
   transition: transform 0.16s ease, border-color 0.16s, box-shadow 0.16s;
   animation: cardIn 0.45s ease both;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .game-card:hover {
@@ -437,9 +450,27 @@ button, a { font-family: inherit; }
 }
 
 .card-cover {
-  aspect-ratio: 3 / 4;
-  background: #12182a center / cover no-repeat;
   position: relative;
+  width: 100%;
+  /* Padding-box ratio is bulletproof on iPad WebKit (aspect-ratio inside cards can collapse to 0) */
+  height: 0;
+  padding-bottom: 133.333%; /* 3:4 portrait */
+  background-color: #12182a;
+  overflow: hidden;
+}
+
+.card-cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border: 0;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  z-index: 0;
 }
 
 .card-cover::after {
@@ -448,6 +479,8 @@ button, a { font-family: inherit; }
   inset: auto 0 0;
   height: 45%;
   background: linear-gradient(to top, rgba(7, 11, 22, 0.85), transparent);
+  pointer-events: none;
+  z-index: 1;
 }
 
 
@@ -565,7 +598,10 @@ button, a { font-family: inherit; }
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #1a2238 center / cover no-repeat;
+  background-color: #1a2238;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   flex-shrink: 0;
 }
 
@@ -659,8 +695,23 @@ button, a { font-family: inherit; }
 
 .sheet-cover {
   height: 220px;
-  background: #10182c center / cover no-repeat;
+  background-color: #10182c;
   position: relative;
+  overflow: hidden;
+}
+
+.sheet-cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border: 0;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  z-index: 0;
 }
 
 .sheet-cover::after {
@@ -670,6 +721,7 @@ button, a { font-family: inherit; }
   height: 50%;
   background: linear-gradient(to top, var(--panel), transparent);
   pointer-events: none;
+  z-index: 1;
 }
 
 /* Version sits at the top of the detail sheet cover (not on library cards) */
@@ -679,6 +731,7 @@ button, a { font-family: inherit; }
   left: 12px;
   z-index: 2;
   max-width: calc(100% - 64px); /* leave room for close button */
+  pointer-events: none;
 }
 
 .sheet-body {
