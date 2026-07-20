@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.031"
+    "appVersion": "1.1.032"
   },
   "games": [
     {
@@ -297,4 +297,3 @@
     }
   ]
 }
-
