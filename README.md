@@ -66,7 +66,7 @@ Games themselves stay on their own repos/Pages. This hub only links to them.
 }
 ```
 
-`"version"` is an optional **fallback** shown until the hub can read the game’s live
+`"version"` is an optional **fallback** shown on the game detail sheet until the hub can read the game’s live
 `GAME_VERSION` from its Pages deploy (`js/config.js` or `js/config/index.js`). Cards and
 the detail sheet prefer that live value so the hub never stays stuck on a stale catalog
 number (e.g. VoidRush). Optional override: `"versionFile": "path/to/config.js"`.

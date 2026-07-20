@@ -128,8 +128,11 @@
     els.featured.setAttribute('role', 'button');
     els.featured.setAttribute('aria-label', `Featured: ${featured.title}`);
     els.featured.dataset.id = featured.id;
+    const featCover = featured.cover
+      ? `<img class="featured-bg-img" src="${_escapeHtml(featured.cover)}" alt="" decoding="async" draggable="false" />`
+      : '';
     els.featured.innerHTML = `
-      <div class="featured-bg" style="background-image:url('${_escapeHtml(featured.cover || '')}')"></div>
+      <div class="featured-bg">${featCover}</div>
       <div class="featured-shade"></div>
       <div class="featured-content">
         <span class="badge">Featured</span>
@@ -144,16 +147,17 @@
     const tags = (g.tags || []).slice(0, 3)
       .map(t => `<span class="tag">${_escapeHtml(t)}</span>`).join('');
     const delay = Math.min(index * 40, 280);
-    const ver = _resolveDisplayVersion(g.version, g.liveVersion);
-    const verHtml = ver
-      ? `<span class="card-version game-version" data-version-for="${_escapeHtml(g.id)}">${_escapeHtml(ver)}</span>`
-      : `<span class="card-version game-version hidden" data-version-for="${_escapeHtml(g.id)}"></span>`;
+    // Real <img> covers (not only CSS background) so WebKit/iPad always paints art.
+    // Version badges stay on the detail sheet only — they covered titles on collapsed cards.
+    const cover = g.cover
+      ? `<img class="card-cover-img" src="${_escapeHtml(g.cover)}" alt="" loading="lazy" decoding="async" draggable="false" />`
+      : '';
     return `
       <button type="button" class="game-card" role="listitem" data-id="${_escapeHtml(g.id)}"
         style="--card-accent:${_escapeHtml(g.accent || '#3de7ff')}; animation-delay:${delay}ms"
         aria-label="${_escapeHtml(g.title)}">
-        <div class="card-cover" style="background-image:url('${_escapeHtml(g.cover || '')}')">
-          ${verHtml}
+        <div class="card-cover">
+          ${cover}
           <span class="card-play" aria-hidden="true">▶</span>
         </div>
         <div class="card-meta">
@@ -199,8 +203,26 @@
 
   // ---------- sheet ----------
   function openSheet(game) {
+    if (!game) return;
     activeGame = game;
-    els.sheetCover.style.backgroundImage = game.cover ? `url('${game.cover}')` : '';
+    // Prefer <img> so cover art shows reliably on iPad WebKit (bg-image can fail with shorthand resets).
+    let img = els.sheetCover.querySelector('.sheet-cover-img');
+    if (game.cover) {
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'sheet-cover-img';
+        img.alt = '';
+        img.decoding = 'async';
+        img.draggable = false;
+        els.sheetCover.insertBefore(img, els.sheetCover.firstChild);
+      }
+      img.src = game.cover;
+      img.hidden = false;
+    } else if (img) {
+      img.removeAttribute('src');
+      img.hidden = true;
+    }
+    els.sheetCover.style.backgroundImage = '';
     els.sheetTags.innerHTML = (game.tags || [])
       .map(t => `<span class="tag">${_escapeHtml(t)}</span>`).join('');
     els.sheetTitle.textContent = game.title;
@@ -222,7 +244,9 @@
     els.openNewTab.href = game.url;
     els.sheet.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
-    els.sheetClose.focus();
+    // Avoid iOS focus scroll jump when opening the sheet from a card tap
+    try { els.sheetClose.focus({ preventScroll: true }); }
+    catch { try { els.sheetClose.focus(); } catch { /* */ } }
   }
 
   function closeSheet() {
@@ -251,50 +275,98 @@
   }
 
   // ---------- events ----------
-  function onClick(e) {
-    const t = e.target;
+  function handleActivate(t, e) {
+    if (!t || !t.closest) return false;
 
     const chip = t.closest('[data-filter]');
     if (chip && els.filterBar.contains(chip)) {
       activeFilter = chip.dataset.filter;
       renderFilters();
       renderGrid();
-      return;
+      return true;
     }
 
     const playNow = t.closest('[data-play]');
     if (playNow) {
-      e.stopPropagation();
+      if (e) e.stopPropagation();
       const g = _byId(playNow.dataset.play);
       if (g) playGame(g);
-      return;
+      return true;
     }
 
     if (t.closest('#featured') && !t.closest('[data-play]')) {
       const g = _byId(els.featured.dataset.id);
       if (g) openSheet(g);
-      return;
+      return true;
     }
 
     const card = t.closest('[data-id]');
     if (card && (els.gameGrid.contains(card) || els.recentRow.contains(card))) {
       const g = _byId(card.dataset.id);
-      if (!g) return;
+      if (!g) return true;
       if (els.recentRow.contains(card)) playGame(g);
       else openSheet(g);
-      return;
+      return true;
     }
 
-    if (t === els.sheetClose || t === els.sheetBackdrop) {
+    if (t === els.sheetClose || t === els.sheetBackdrop || t.closest('#sheetClose')) {
       closeSheet();
-      return;
+      return true;
     }
-    if (t === els.playBtn && activeGame) {
+    if ((t === els.playBtn || t.closest('#playBtn')) && activeGame) {
       playGame(activeGame);
+      return true;
+    }
+    if (t === els.installBtn || t.closest('#installBtn')) {
+      promptInstall();
+      return true;
+    }
+    return false;
+  }
+
+  /** Suppress the synthetic click that follows a touchend we already handled. */
+  let ignoreClickUntil = 0;
+
+  function onClick(e) {
+    if (Date.now() < ignoreClickUntil) {
+      e.preventDefault();
+      e.stopPropagation();
       return;
     }
-    if (t === els.installBtn) {
-      promptInstall();
+    handleActivate(e.target, e);
+  }
+
+  /**
+   * iPad/iOS sometimes fails to deliver click after touch on complex card layouts.
+   * Mirror primary actions on touchend (tap without scroll) so cards stay tappable.
+   */
+  let touchStartY = 0;
+  let touchStartX = 0;
+  let touchArmed = false;
+
+  function onTouchStart(e) {
+    const touch = e.changedTouches && e.changedTouches[0];
+    if (!touch) return;
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchArmed = true;
+  }
+
+  function onTouchEnd(e) {
+    if (!touchArmed) return;
+    touchArmed = false;
+    const touch = e.changedTouches && e.changedTouches[0];
+    if (!touch) return;
+    const dx = Math.abs(touch.clientX - touchStartX);
+    const dy = Math.abs(touch.clientY - touchStartY);
+    if (dx > 12 || dy > 12) return; // scroll / drag — not a tap
+    const el = document.elementFromPoint(touch.clientX, touch.clientY) || e.target;
+    // Only synthetic-handle library/featured/recent — let normal controls use click
+    if (!el || !el.closest) return;
+    if (!el.closest('.game-card, .recent-chip, #featured, .filter-chip, .featured-cta')) return;
+    if (handleActivate(el, e)) {
+      ignoreClickUntil = Date.now() + 500;
+      e.preventDefault(); // suppress ghost click after successful tap
     }
   }
 
@@ -418,18 +490,9 @@
   }
 
   // ---------- live game versions (from each game's GAME_VERSION) ----------
+  /** Update detail-sheet version only (library cards do not show versions). */
   function paintVersionBadges(game) {
     const ver = _resolveDisplayVersion(game.version, game.liveVersion);
-    document.querySelectorAll(`[data-version-for="${game.id}"]`).forEach(el => {
-      if (ver) {
-        el.textContent = ver;
-        el.classList.remove('hidden');
-      } else {
-        el.textContent = '';
-        el.classList.add('hidden');
-      }
-    });
-    // Detail sheet open for this game
     if (activeGame && activeGame.id === game.id && els.sheetVersion) {
       if (ver) {
         els.sheetVersion.textContent = ver;
@@ -477,6 +540,8 @@
     setupInstall();
     registerSW();
     document.addEventListener('click', onClick);
+    document.addEventListener('touchstart', onTouchStart, { passive: true });
+    document.addEventListener('touchend', onTouchEnd, { passive: false });
     document.addEventListener('keydown', onKey);
     els.openNewTab.addEventListener('click', e => {
       if (!activeGame) return;
