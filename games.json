@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.033"
+    "appVersion": "1.1.034"
   },
   "games": [
     {
@@ -310,7 +310,7 @@
       ],
       "featured": false,
       "repo": "dress-up-mermaid",
-      "version": "1.0.000"
+      "version": "1.0.001"
     }
   ]
 }
