@@ -163,3 +163,5 @@ The hub shell (UI + covers) works offline once visited. Individual games still n
 - [Dress-Up Dino](https://jmitchell238.github.io/dress-up-dino/) (`dress-up-dino`)
 - [Number Caterpillar](https://jmitchell238.github.io/number-caterpillar/) (`number-caterpillar`)
 - [Letter Picnic](https://jmitchell238.github.io/letter-picnic/) (`letter-picnic`)
+- [Cozy Racers](https://jmitchell238.github.io/cozy-racers/) (`cozy-racers`)
+- [Mermaid Dress-Up](https://jmitchell238.github.io/dress-up-mermaid/) (`dress-up-mermaid`)
