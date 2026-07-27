@@ -3,9 +3,26 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.034"
+    "appVersion": "1.1.035"
   },
   "games": [
+    {
+      "id": "orb-merge-run",
+      "title": "Orb Merge Run",
+      "subtitle": "Steer · merge · grow to 2048",
+      "description": "Guide a numbered orb along a candy-colored track. Merge matching numbers to grow (2→4→8…→2048 rainbow), dodge thorns and pits, and race for the checkered goal. Higher finish value means more coins!",
+      "url": "https://jmitchell238.github.io/orb-merge-run/",
+      "cover": "art/covers/orb-merge-run.jpg",
+      "accent": "#7af0ff",
+      "tags": [
+        "Runner",
+        "Merge",
+        "Arcade"
+      ],
+      "featured": false,
+      "repo": "orb-merge-run",
+      "version": "1.0.000"
+    },
     {
       "id": "voidrush",
       "title": "VoidRush",
