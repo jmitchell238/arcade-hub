@@ -3,14 +3,14 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.047"
+    "appVersion": "1.1.048"
   },
   "games": [
     {
       "id": "orb-merge-run",
       "title": "Orb Merge Run",
       "subtitle": "Steer · merge · grow to 2048",
-      "description": "Guide a rolling numbered orb along a candy track. Merge matching numbers (2→4→8…→2048), knock mismatches aside, dodge thorns and pits, then smash post-finish bonus walls for coin multipliers.",
+      "description": "Guide a rolling numbered orb along a candy track. Merge matching numbers, dodge thorns and pits, smash post-finish bonus walls — endless seeded levels so you never run out.",
       "url": "https://jmitchell238.github.io/orb-merge-run/",
       "cover": "art/covers/orb-merge-run.jpg",
       "accent": "#7af0ff",
@@ -21,7 +21,7 @@
       ],
       "featured": false,
       "repo": "orb-merge-run",
-      "version": "1.2.010"
+      "version": "1.3.000"
     },
     {
       "id": "voidrush",
