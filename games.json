@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.046"
+    "appVersion": "1.1.047"
   },
   "games": [
     {
@@ -21,7 +21,7 @@
       ],
       "featured": false,
       "repo": "orb-merge-run",
-      "version": "1.2.009"
+      "version": "1.2.010"
     },
     {
       "id": "voidrush",
