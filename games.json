@@ -3,9 +3,26 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.048"
+    "appVersion": "1.1.050"
   },
   "games": [
+    {
+      "id": "blockbound",
+      "title": "Blockbound",
+      "subtitle": "Mine · build · walk the world around",
+      "description": "A 2D side-view sandbox inspired by The Blockheads. Dig through dirt and stone, craft tools at a workbench, place torches in caves, and dig down to magma. Walk far enough left or right and you’ll loop all the way around the world. Sky above, fire below — build anything in between.",
+      "url": "https://jmitchell238.github.io/blockbound/",
+      "cover": "art/covers/blockbound.jpg",
+      "accent": "#6fbf45",
+      "tags": [
+        "Sandbox",
+        "Adventure",
+        "Crafting"
+      ],
+      "featured": false,
+      "repo": "blockbound",
+      "version": "1.3.000"
+    },
     {
       "id": "orb-merge-run",
       "title": "Orb Merge Run",
