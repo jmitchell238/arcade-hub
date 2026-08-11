@@ -59,7 +59,12 @@
     : (g) => {
       const base = String(g && g.url || '').replace(/\/?$/, '/');
       if (!/^https:\/\//i.test(base)) return [];
-      return [base + 'js/config.js', base + 'js/config/index.js'];
+      return [
+        base + 'js/config.js',
+        base + 'js/config/index.js',
+        base + 'js/core/constants.js',
+        base + 'js/constants.js',
+      ];
     };
   const _parseGameVersionFromSource = typeof parseGameVersionFromSource === 'function'
     ? parseGameVersionFromSource

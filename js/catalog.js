@@ -44,7 +44,8 @@ function versionProbeUrls(game) {
   let files = game && game.versionFile;
   if (typeof files === 'string' && files.trim()) files = [files.trim()];
   if (!Array.isArray(files) || !files.length) {
-    files = ['js/config.js', 'js/config/index.js'];
+    // config.js (legacy) · constants.js (Blockbound-style ESM modules)
+    files = ['js/config.js', 'js/config/index.js', 'js/core/constants.js', 'js/constants.js'];
   }
   return files.map(f => {
     const rel = String(f).replace(/^\.\//, '').replace(/^\//, '');
@@ -61,10 +62,11 @@ function versionProbeUrls(game) {
 function parseGameVersionFromSource(text) {
   if (!text || typeof text !== 'string') return null;
   const patterns = [
+    /export\s+(?:const|let|var)\s+GAME_VERSION\s*=\s*['"]([^'"]+)['"]/,
     /(?:const|let|var)\s+GAME_VERSION\s*=\s*['"]([^'"]+)['"]/,
     /GAME_VERSION\s*=\s*['"]([^'"]+)['"]/,
+    /export\s+(?:const|let|var)\s+HUB_VERSION\s*=\s*['"]([^'"]+)['"]/,
     /(?:const|let|var)\s+HUB_VERSION\s*=\s*['"]([^'"]+)['"]/,
-    /export\s+const\s+GAME_VERSION\s*=\s*['"]([^'"]+)['"]/,
   ];
   for (const re of patterns) {
     const m = text.match(re);
