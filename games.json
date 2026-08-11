@@ -21,7 +21,7 @@
       ],
       "featured": false,
       "repo": "blockbound",
-      "version": "1.4.001"
+      "version": "1.5.000"
     },
     {
       "id": "orb-merge-run",
@@ -55,7 +55,7 @@
       ],
       "featured": true,
       "repo": "hole-game",
-      "version": "2.43.014"
+      "version": "2.43.016"
     },
     {
       "id": "crowd-clash",
