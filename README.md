@@ -1,153 +1,14 @@
 # Arcade Hub
 
-One installable home screen for **all** of your GitHub Pages games.
+A launcher for my GitHub Pages games. Install it as a PWA and every game is one tap away from the home screen.
 
-Open it in a browser, tap **Install** / **Add to Home Screen**, and launch VoidRush, Crowd Clash Runner, or anything you add later.
+Live at https://jmitchell238.github.io/arcade-hub/
 
-**Live (after you enable Pages):** `https://jmitchell238.github.io/arcade-hub/`
-
----
-
-## What’s included
-
-| Path | Purpose |
-|------|---------|
-| `index.html` | Launcher UI |
-| `css/style.css` | Neon arcade styling |
-| `js/config.js` | **Hub version** (`HUB_VERSION` / `GAME_VERSION`) |
-| `js/app.js` | Catalog, filters, PWA install, recent plays |
-| `games.json` | **Add new games here** |
-| `manifest.webmanifest` + `sw.js` | PWA install + offline shell |
-| `art/` + `icons/` | Covers and app icons |
-
-## Tests
-
-```bash
-node tests/run.mjs
-```
-
-Covers catalog helpers (filter, recent, HTML escape, validation), `games.json` integrity
-(covers on disk, https links, one featured game), version/SW sync, and PWA shell files.
-
-## Versioning
-
-Same scheme as VoidRush (`hole-game`):
-
-- `HUB_VERSION` in `js/config.js` — `MAJOR.MINOR.PATCH` (patch zero-padded to 3 digits)
-- Also exposed as `GAME_VERSION` for shared update-check patterns
-- UI shows `Arcade Hub v…` (corner tag + footer)
-- Keep `CACHE` in `sw.js` in sync: `'arcade-hub-' + HUB_VERSION`
-- SW + remote `config.js` version check auto-reloads installed PWAs
-- Optional mirror: `hub.appVersion` in `games.json`
-
-Games themselves stay on their own repos/Pages. This hub only links to them.
-
----
-
-## Add a new game
-
-1. Ship the game on GitHub Pages (e.g. `https://jmitchell238.github.io/my-new-game/`).
-2. Drop a **3:4 cover image** into `art/covers/` (JPG or PNG, ~800–1200px tall is fine).
-3. Append an entry to `games.json`:
-
-```json
-{
-  "id": "my-new-game",
-  "title": "My New Game",
-  "subtitle": "One-line pitch",
-  "description": "Longer blurb shown in the detail sheet.",
-  "url": "https://jmitchell238.github.io/my-new-game/",
-  "cover": "art/covers/my-new-game.jpg",
-  "accent": "#ff8c42",
-  "tags": ["Action", "Puzzle"],
-  "featured": false,
-  "repo": "my-new-game",
-  "version": "1.0.000"
-}
-```
-
-`"version"` is an optional **fallback** shown on the game detail sheet until the hub can read the game’s live
-`GAME_VERSION` from its Pages deploy (`js/config.js` or `js/config/index.js`). Cards and
-the detail sheet prefer that live value so the hub never stays stuck on a stale catalog
-number (e.g. VoidRush). Optional override: `"versionFile": "path/to/config.js"`.
-
-4. List the new cover (and any new asset) in `sw.js` → `ASSETS`, and bump the `CACHE` string so clients pick it up.
-5. Commit, push, wait for Pages to rebuild.
-
-Set `"featured": true` on at most one game to put it in the hero banner.
-
----
-
-## Local preview
-
-Any static server works. From this folder:
-
-```bash
-# Python
-python3 -m http.server 8080
-
-# or Node
-npx --yes serve -p 8080
-```
-
-Then open `http://localhost:8080`.
-
-> Service workers and install prompts need **http://localhost** or **https://** — not `file://`.
-
----
-
-## Deploy to GitHub Pages
-
-```bash
-cd arcade-hub
-git init
-git add .
-git commit -m "Initial Arcade Hub"
-git branch -M main
-git remote add origin git@github.com:jmitchell238/arcade-hub.git
-git push -u origin main
-```
-
-On GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main` / `/ (root)`**.
-
-Optional: set the custom domain later; otherwise the URL is:
-
-`https://jmitchell238.github.io/arcade-hub/`
-
----
-
-## Install as a PWA
-
-| Platform | How |
-|----------|-----|
-| **Chrome / Edge (Android & desktop)** | Address bar install icon, or the in-app **Install** button |
-| **Safari (iPhone/iPad)** | Share → **Add to Home Screen** |
-| **Already installed** | Opens full-screen without browser chrome |
-
-The hub shell (UI + covers) works offline once visited. Individual games still need network the first time you open them (their own PWAs can cache themselves after that).
-
----
-
-## Catalog fields
-
-| Field | Required | Notes |
-|-------|----------|--------|
-| `id` | yes | Stable slug (recent-play storage key) |
-| `title` | yes | Display name |
-| `url` | yes | Full `https://…github.io/…` game URL |
-| `subtitle` | no | Card / hero one-liner |
-| `description` | no | Detail sheet body |
-| `cover` | no | Relative path under this repo |
-| `accent` | no | Hex color for card hover / play button |
-| `tags` | no | Filter chips |
-| `featured` | no | Hero banner if `true` |
-| `repo` | no | GitHub repo name (for your notes) |
-
----
-
-## Current library
+## Games
 
 - [VoidRush](https://jmitchell238.github.io/hole-game/) (`hole-game`)
+- [Blockbound](https://jmitchell238.github.io/blockbound/) (`blockbound`)
+- [Orb Merge Run](https://jmitchell238.github.io/orb-merge-run/) (`orb-merge-run`)
 - [Crowd Clash Runner](https://jmitchell238.github.io/crowd-runner/) (`crowd-runner`)
 - [Drop & Fuse](https://jmitchell238.github.io/drop-and-fuse/) (`drop-and-fuse`)
 - [Neon Autofire](https://jmitchell238.github.io/neon-autofire/) (`neon-autofire`)
@@ -165,4 +26,102 @@ The hub shell (UI + covers) works offline once visited. Individual games still n
 - [Letter Picnic](https://jmitchell238.github.io/letter-picnic/) (`letter-picnic`)
 - [Cozy Racers](https://jmitchell238.github.io/cozy-racers/) (`cozy-racers`)
 - [Mermaid Dress-Up](https://jmitchell238.github.io/dress-up-mermaid/) (`dress-up-mermaid`)
-- [Blockbound](https://jmitchell238.github.io/blockbound/) (`blockbound`)
+
+Each game lives in its own repo and deploys to its own Pages site. The hub only links to them.
+
+## Layout
+
+| Path | Purpose |
+|------|---------|
+| `index.html` | Launcher UI |
+| `css/style.css` | Styles |
+| `js/config.js` | `HUB_VERSION` |
+| `js/app.js` | Catalog, filters, install prompt, recently played |
+| `games.json` | Game catalog |
+| `manifest.webmanifest`, `sw.js` | PWA manifest and offline shell |
+| `art/`, `icons/` | Cover art and app icons |
+| `tests/run.mjs` | Test runner |
+
+## Running locally
+
+Serve the folder with any static server:
+
+```bash
+python3 -m http.server 8080
+# or
+npx --yes serve -p 8080
+```
+
+Then open http://localhost:8080. The service worker and install prompt need `localhost` or HTTPS, so opening `index.html` from disk won't work.
+
+## Tests
+
+```bash
+node tests/run.mjs
+```
+
+Covers the catalog helpers (filtering, recent plays, HTML escaping, validation), `games.json` integrity (covers exist, links are HTTPS, only one featured game), version sync, and the PWA shell files.
+
+## Adding a game
+
+1. Deploy the game to GitHub Pages.
+2. Add a 3:4 cover to `art/covers/` (JPG or PNG, 800–1200px tall).
+3. Add an entry to `games.json`:
+
+   ```json
+   {
+     "id": "my-new-game",
+     "title": "My New Game",
+     "subtitle": "One-line pitch",
+     "description": "Longer blurb for the detail sheet.",
+     "url": "https://jmitchell238.github.io/my-new-game/",
+     "cover": "art/covers/my-new-game.jpg",
+     "accent": "#ff8c42",
+     "tags": ["Action", "Puzzle"],
+     "featured": false,
+     "repo": "my-new-game",
+     "version": "1.0.000"
+   }
+   ```
+
+4. Add the cover to `ASSETS` in `sw.js` and bump the hub version (see below).
+5. Push to `main`. Pages redeploys on its own.
+
+### Catalog fields
+
+| Field | Required | Notes |
+|-------|----------|-------|
+| `id` | yes | Stable slug, also the recently-played storage key |
+| `title` | yes | Display name |
+| `url` | yes | Full HTTPS URL to the game |
+| `subtitle` | no | One-liner on the card and hero |
+| `description` | no | Detail sheet text |
+| `cover` | no | Path to the cover in this repo |
+| `accent` | no | Hex color for hover and the play button |
+| `tags` | no | Filter chips |
+| `featured` | no | Puts the game in the hero banner. One game at most. |
+| `repo` | no | Repo name, for reference |
+| `version` | no | Fallback version for the detail sheet |
+| `versionFile` | no | Where to read the live version from, if it isn't `js/config.js` or `js/config/index.js` |
+
+The hub reads each game's live `GAME_VERSION` from its Pages site and shows that. `version` is only used until that loads, or if it can't be read.
+
+## Versioning
+
+`HUB_VERSION` in `js/config.js` uses `MAJOR.MINOR.PATCH` with a three-digit patch (e.g. `1.1.052`). It's also exported as `GAME_VERSION` so the hub uses the same update check as the games.
+
+When bumping it, also update:
+
+- `CACHE` in `sw.js` (`'arcade-hub-' + HUB_VERSION`)
+- `hub.appVersion` in `games.json`
+
+The tests fail if either one is out of sync. Installed copies pick up the new service worker, see the version change, and reload.
+
+## Installing
+
+| Platform | How |
+|----------|-----|
+| Chrome / Edge (Android, desktop) | Install icon in the address bar, or the Install button in the hub |
+| Safari (iPhone, iPad) | Share → Add to Home Screen |
+
+Once it's been opened, the hub UI and covers work offline. Each game needs a connection the first time it's opened; after that it depends on whether the game caches itself.
