@@ -38,6 +38,10 @@ Each game lives in its own repo and deploys to its own Pages site. The hub only 
 
 Once it's been opened, the hub UI and covers work offline. Each game needs a connection the first time it's opened; after that it depends on whether the game caches itself.
 
+## License
+
+© 2026 James Mitchell / 238 Apps. All rights reserved. You're welcome to play it at https://jmitchell238.github.io/arcade-hub/, but the code, art and other content may not be copied, reused, republished or sold without permission. Third-party material keeps its own license. See [LICENSE](LICENSE), the [Terms of Use](https://jmitchell238.github.io/arcade-hub/terms.html) and the [Privacy Policy](https://jmitchell238.github.io/arcade-hub/privacy.html).
+
 ## Development
 
 See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for running it locally, tests, adding a game and versioning, and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how it's put together.

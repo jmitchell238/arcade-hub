@@ -619,6 +619,10 @@ button, a, .game-card, .filter-chip, .recent-chip, .featured-cta, .play-btn, .gh
   opacity: 0.85;
 }
 
+#footer a {
+  color: var(--cyan);
+}
+
 #footer code {
   font-size: 0.72rem;
   background: rgba(255, 255, 255, 0.08);
