@@ -186,6 +186,11 @@ function validateCatalog(data) {
     if (g.cover != null && typeof g.cover !== 'string') {
       errors.push(`${prefix}.cover must be a string path`);
     }
+    for (const key of ['featuredDesktop', 'featuredMobile']) {
+      if (g[key] != null && typeof g[key] !== 'string') {
+        errors.push(`${prefix}.${key} must be a string path`);
+      }
+    }
     if (g.tags != null && !Array.isArray(g.tags)) {
       errors.push(`${prefix}.tags must be an array`);
     }

@@ -1,6 +1,6 @@
 // Arcade Hub service worker — caches the launcher shell for instant/offline open.
 // Bump with HUB_VERSION / GAME_VERSION in js/config.js (MAJOR.MINOR.PATCH).
-const CACHE = 'arcade-hub-1.1.057';
+const CACHE = 'arcade-hub-1.1.058';
 
 const ASSETS = [
   './',
@@ -39,6 +39,46 @@ const ASSETS = [
   './art/covers/dress-up-mermaid.jpg',
   './art/covers/orb-merge-run.jpg',
   './art/covers/blockbound.jpg',
+  './art/featured/blockbound-desktop.jpg',
+  './art/featured/blockbound-mobile.jpg',
+  './art/featured/voidrush-desktop.jpg',
+  './art/featured/voidrush-mobile.jpg',
+  './art/featured/orb-merge-run-desktop.jpg',
+  './art/featured/orb-merge-run-mobile.jpg',
+  './art/featured/crowd-clash-desktop.jpg',
+  './art/featured/crowd-clash-mobile.jpg',
+  './art/featured/drop-and-fuse-desktop.jpg',
+  './art/featured/drop-and-fuse-mobile.jpg',
+  './art/featured/neon-autofire-desktop.jpg',
+  './art/featured/neon-autofire-mobile.jpg',
+  './art/featured/ironvale-desktop.jpg',
+  './art/featured/ironvale-mobile.jpg',
+  './art/featured/bottle-sort-desktop.jpg',
+  './art/featured/bottle-sort-mobile.jpg',
+  './art/featured/maze-adventure-desktop.jpg',
+  './art/featured/maze-adventure-mobile.jpg',
+  './art/featured/animal-tap-zoo-desktop.jpg',
+  './art/featured/animal-tap-zoo-mobile.jpg',
+  './art/featured/bubble-pop-garden-desktop.jpg',
+  './art/featured/bubble-pop-garden-mobile.jpg',
+  './art/featured/color-match-pond-desktop.jpg',
+  './art/featured/color-match-pond-mobile.jpg',
+  './art/featured/hide-seek-rooms-desktop.jpg',
+  './art/featured/hide-seek-rooms-mobile.jpg',
+  './art/featured/treasure-dig-desktop.jpg',
+  './art/featured/treasure-dig-mobile.jpg',
+  './art/featured/shape-train-desktop.jpg',
+  './art/featured/shape-train-mobile.jpg',
+  './art/featured/dress-up-dino-desktop.jpg',
+  './art/featured/dress-up-dino-mobile.jpg',
+  './art/featured/number-caterpillar-desktop.jpg',
+  './art/featured/number-caterpillar-mobile.jpg',
+  './art/featured/letter-picnic-desktop.jpg',
+  './art/featured/letter-picnic-mobile.jpg',
+  './art/featured/cozy-racers-desktop.jpg',
+  './art/featured/cozy-racers-mobile.jpg',
+  './art/featured/dress-up-mermaid-desktop.jpg',
+  './art/featured/dress-up-mermaid-mobile.jpg',
 ];
 
 function precacheAll(cache) {

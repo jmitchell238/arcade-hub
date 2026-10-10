@@ -54,7 +54,9 @@ Covers the catalog helpers (filtering, recent plays, HTML escaping, validation),
 | `url` | yes | Full HTTPS URL to the game |
 | `subtitle` | no | One-liner on the card and hero |
 | `description` | no | Detail sheet text |
-| `cover` | no | Path to the cover in this repo |
+| `cover` | no | Path to the portrait cover used on library cards |
+| `featuredDesktop` | no | 16:9 gameplay frame for the hero on wide screens |
+| `featuredMobile` | no | 4:3 gameplay frame for the hero on phones |
 | `accent` | no | Hex color for hover and the play button |
 | `tags` | no | Filter chips |
 | `featured` | no | Pins the game in the hero banner, overriding the weekly rotation. One game at most. |

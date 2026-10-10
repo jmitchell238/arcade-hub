@@ -215,9 +215,10 @@ button, a, .game-card, .filter-chip, .recent-chip, .featured-cta, .play-btn, .gh
 /* ---------- featured ---------- */
 #featured {
   position: relative;
+  display: flex;
+  flex-direction: column;
   border-radius: calc(var(--radius) + 4px);
   overflow: hidden;
-  min-height: 220px;
   box-shadow: var(--shadow);
   border: 1px solid var(--line);
   cursor: pointer;
@@ -236,13 +237,19 @@ button, a, .game-card, .filter-chip, .recent-chip, .featured-cta, .play-btn, .gh
 }
 
 .featured-bg {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  aspect-ratio: 4 / 3;
   background-color: #12182a;
-  transform: scale(1.02);
-  transition: transform 0.45s ease;
   z-index: 0;
   overflow: hidden;
+}
+
+.featured-bg picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .featured-bg-img {
@@ -251,21 +258,17 @@ button, a, .game-card, .filter-chip, .recent-chip, .featured-cta, .play-btn, .gh
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center;
   display: block;
   border: 0;
   pointer-events: none;
   -webkit-user-drag: none;
 }
 
-#featured:hover .featured-bg { transform: scale(1.06); }
-
 .featured-shade {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(100deg, rgba(7, 11, 22, 0.92) 0%, rgba(7, 11, 22, 0.55) 48%, rgba(7, 11, 22, 0.2) 100%),
-    linear-gradient(0deg, rgba(7, 11, 22, 0.75) 0%, transparent 50%);
+  background: linear-gradient(180deg, transparent 72%, rgba(7, 11, 22, 0.28) 100%);
   z-index: 1;
   pointer-events: none;
 }
@@ -273,13 +276,34 @@ button, a, .game-card, .filter-chip, .recent-chip, .featured-cta, .play-btn, .gh
 .featured-content {
   position: relative;
   z-index: 2;
-  padding: clamp(18px, 4vw, 28px);
-  min-height: 220px;
+  padding: 16px 18px 18px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   gap: 8px;
-  max-width: 520px;
+  max-width: none;
+}
+
+@media (min-width: 800px) {
+  #featured { display: block; aspect-ratio: 16 / 9; }
+  .featured-bg {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+    transform: scale(1.02);
+    transition: transform 0.45s ease;
+  }
+  #featured:hover .featured-bg { transform: scale(1.06); }
+  .featured-content {
+    min-height: 100%;
+    max-width: 460px;
+    padding: clamp(18px, 4vw, 28px);
+  }
+  .featured-shade {
+    background:
+      linear-gradient(100deg, rgba(7, 11, 22, 0.92) 0%, rgba(7, 11, 22, 0.5) 40%, rgba(7, 11, 22, 0.05) 72%),
+      linear-gradient(180deg, rgba(7, 11, 22, 0.05) 46%, rgba(7, 11, 22, 0.78) 100%);
+  }
 }
 
 .badge {
@@ -698,7 +722,7 @@ button, a, .game-card, .filter-chip, .recent-chip, .featured-cta, .play-btn, .gh
 .sheet-close:hover { background: rgba(255, 255, 255, 0.12); }
 
 .sheet-cover {
-  height: 220px;
+  aspect-ratio: 16 / 9;
   background-color: #10182c;
   position: relative;
   overflow: hidden;
