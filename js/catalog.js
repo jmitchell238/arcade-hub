@@ -105,6 +105,29 @@ function byId(games, id) {
   return (games || []).find(g => g.id === id);
 }
 
+/**
+ * Pick the game for the hero banner.
+ * A game with `featured: true` is a manual pin and always wins. Otherwise the
+ * games with `rotate: true` (catalog order) take turns, one per week, with the
+ * week starting Monday (local time) — Mon 2026-10-05 is week 0.
+ * @param {object[]} games
+ * @param {Date} [date]
+ * @returns {object|null}
+ */
+function pickFeatured(games, date = new Date()) {
+  const list = games || [];
+  const pinned = list.find(g => g.featured === true);
+  if (pinned) return pinned;
+  const pool = list.filter(g => g.rotate === true);
+  if (!pool.length) return list[0] || null;
+  // Local calendar dates + Math.round keep DST shifts from skewing the day count
+  const epoch = new Date(2026, 9, 5);
+  const day = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const days = Math.round((day - epoch) / 86400000);
+  const week = Math.floor(days / 7);
+  return pool[((week % pool.length) + pool.length) % pool.length];
+}
+
 function loadRecent(storage, key = RECENT_KEY_DEFAULT) {
   try {
     const raw = storage.getItem(key);
@@ -167,6 +190,9 @@ function validateCatalog(data) {
       errors.push(`${prefix}.tags must be an array`);
     }
     if (g.featured === true) featuredCount += 1;
+    if (g.rotate != null && typeof g.rotate !== 'boolean') {
+      errors.push(`${prefix}.rotate must be a boolean`);
+    }
 
     if (g.version != null) {
       if (typeof g.version !== 'string' || !g.version.trim()) {
@@ -205,6 +231,7 @@ if (typeof module !== 'undefined' && module.exports) {
     allTags,
     filteredGames,
     byId,
+    pickFeatured,
     loadRecent,
     saveRecent,
     validateCatalog,

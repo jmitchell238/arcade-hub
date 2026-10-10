@@ -54,6 +54,9 @@
       if (!s) return '';
       return s.charAt(0) === 'v' || s.charAt(0) === 'V' ? s : `v${s}`;
     };
+  const _pickFeatured = typeof pickFeatured === 'function'
+    ? pickFeatured
+    : (list) => list.find(g => g.featured) || list[0] || null;
   const _versionProbeUrls = typeof versionProbeUrls === 'function'
     ? versionProbeUrls
     : (g) => {
@@ -123,7 +126,7 @@
   }
 
   function renderFeatured() {
-    const featured = games.find(g => g.featured) || games[0];
+    const featured = _pickFeatured(games, new Date());
     if (!featured) {
       els.featured.classList.add('hidden');
       return;
