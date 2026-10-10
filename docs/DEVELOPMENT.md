@@ -18,7 +18,7 @@ Then open http://localhost:8080. The service worker and install prompt need `loc
 node tests/run.mjs
 ```
 
-Covers the catalog helpers (filtering, recent plays, HTML escaping, validation), `games.json` integrity (covers exist, links are HTTPS, only one featured game), version sync, and the PWA shell files.
+Covers the catalog helpers (filtering, recent plays, HTML escaping, validation), `games.json` integrity (covers exist, links are HTTPS, at most one featured game), version sync, and the PWA shell files.
 
 ## Adding a game
 
@@ -57,7 +57,8 @@ Covers the catalog helpers (filtering, recent plays, HTML escaping, validation),
 | `cover` | no | Path to the cover in this repo |
 | `accent` | no | Hex color for hover and the play button |
 | `tags` | no | Filter chips |
-| `featured` | no | Puts the game in the hero banner. One game at most. |
+| `featured` | no | Pins the game in the hero banner, overriding the weekly rotation. One game at most. |
+| `rotate` | no | Puts the game in the weekly featured rotation. Rotation changes each Monday; a `featured` game overrides it. |
 | `repo` | no | Repo name, for reference |
 | `version` | no | Fallback version for the detail sheet |
 | `versionFile` | no | Where to read the live version from, if it isn't one of the usual paths (see [ARCHITECTURE.md](ARCHITECTURE.md#game-versions)) |

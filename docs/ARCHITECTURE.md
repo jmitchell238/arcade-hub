@@ -19,7 +19,7 @@ A static site with no build step. Three plain scripts load in order from `index.
 
 ## Catalog
 
-`app.js` fetches `games.json` on startup, validates it with `validateCatalog()` and renders the featured game, filter chips, recently played row and grid. Recently played games are stored in localStorage under `arcade-hub-recent`.
+`app.js` fetches `games.json` on startup, validates it with `validateCatalog()` and renders the featured game (a `featured` pin, else the weekly `rotate` pick from `pickFeatured()`), filter chips, recently played row and grid. Recently played games are stored in localStorage under `arcade-hub-recent`.
 
 The games themselves live in their own repos and Pages sites. The hub only links to them.
 

@@ -169,6 +169,38 @@ section('catalog validation');
     ],
   });
   assert(twoFeat.errors.some(e => e.includes('featured')), 'multiple featured rejected');
+
+  const badRotate = cat.validateCatalog({
+    hub: { name: 'X' },
+    games: [{ id: 'a', title: 'A', url: 'https://a/', rotate: 'yes' }],
+  });
+  assert(badRotate.errors.some(e => e.includes('rotate')), 'non-boolean rotate rejected');
+}
+
+section('featured rotation');
+{
+  const cat = loadCatalogModule();
+  const mk = (id, extra = {}) => ({ id, title: id, url: 'https://x/', ...extra });
+  const games = [mk('skip1'), mk('a', { rotate: true }), mk('skip2'), mk('b', { rotate: true }), mk('c', { rotate: true })];
+  const pick = (d) => cat.pickFeatured(games, d).id;
+
+  assertEq(cat.pickFeatured([mk('p', { featured: true }), mk('a', { rotate: true })], new Date(2026, 9, 12)).id,
+    'p', 'featured pin overrides rotation');
+  assertEq(pick(new Date(2026, 9, 5)), 'a', 'epoch Monday picks first rotate game');
+  assertEq(pick(new Date(2026, 9, 11, 23, 59)), 'a', 'Sunday of epoch week still first');
+  assertEq(pick(new Date(2026, 9, 12)), 'b', 'next Monday picks second');
+  assertEq(pick(new Date(2026, 9, 19)), 'c', 'third week picks third');
+  assertEq(pick(new Date(2026, 9, 26)), 'a', 'wraps after pool length');
+  const before = pick(new Date(2026, 8, 28));
+  assertEq(before, 'c', 'week before epoch wraps backward to last');
+  assert(['a', 'b', 'c'].includes(pick(new Date(2020, 0, 1))), 'far-past date gives a valid pick');
+  for (let d = 0; d < 60; d++) {
+    assert(games.indexOf(cat.pickFeatured(games, new Date(2026, 9, 5 + d * 3))) > 0
+      && cat.pickFeatured(games, new Date(2026, 9, 5 + d * 3)).rotate === true,
+    'non-rotate games never picked') ;
+  }
+  assertEq(cat.pickFeatured([mk('x'), mk('y')], new Date(2026, 9, 12)).id, 'x', 'no rotate games falls back to first');
+  assertEq(cat.pickFeatured([], new Date()), null, 'empty catalog gives null');
 }
 
 // -------------------- live games.json --------------------
@@ -213,7 +245,8 @@ section('games.json integrity');
   }
 
   const featured = data.games.filter(g => g.featured);
-  assertEq(featured.length, 1, 'exactly one featured game');
+  assert(featured.length <= 1, 'at most one featured game');
+  assert(data.games.some(g => g.rotate === true), 'at least one game is in the weekly rotation');
 }
 
 // -------------------- versioning --------------------
