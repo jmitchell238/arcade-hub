@@ -229,6 +229,10 @@ section('games.json integrity');
     if (g.cover) {
       assert(exists(g.cover), `cover exists: ${g.cover}`);
     }
+    assert(typeof g.featuredDesktop === 'string' && exists(g.featuredDesktop),
+      `${g.id} desktop featured image exists: ${g.featuredDesktop}`);
+    assert(typeof g.featuredMobile === 'string' && exists(g.featuredMobile),
+      `${g.id} mobile featured image exists: ${g.featuredMobile}`);
     assert(/^https:\/\/jmitchell238\.github\.io\//.test(g.url),
       `${g.id} links to github pages: ${g.url}`);
     // hub only links — cover must not embed game code
@@ -301,6 +305,9 @@ section('PWA shell + HTML');
   assert(app.includes('sheet-cover-img') || app.includes('sheetCover'),
     'sheet cover image path is wired');
   assert(app.includes('card-cover-img'), 'library cards use <img> covers');
+  assert(app.includes('featuredDesktop') && app.includes('featuredMobile'),
+    'featured hero uses desktop and mobile art');
+  assert(app.includes('<picture>'), 'featured hero picks art with picture');
   assert(app.includes('hydrateLiveVersions') || app.includes('fetchLiveVersion'),
     'app hydrates live GAME_VERSION from each game');
   assert(app.includes('liveVersion') || app.includes('parseGameVersionFromSource'),

@@ -136,8 +136,15 @@
     els.featured.setAttribute('role', 'button');
     els.featured.setAttribute('aria-label', `Featured: ${featured.title}`);
     els.featured.dataset.id = featured.id;
-    const featCover = featured.cover
-      ? `<img class="featured-bg-img" src="${_escapeHtml(featured.cover)}" alt="" decoding="async" draggable="false" />`
+    // Desktop and mobile banners are framed for this hero. The portrait cover
+    // is a tall poster, and cropping it into the banner hid the game.
+    const featDesk = featured.featuredDesktop || featured.cover || '';
+    const featMob = featured.featuredMobile || featDesk;
+    const featCover = featMob
+      ? `<picture>
+          <source media="(min-width: 800px)" srcset="${_escapeHtml(featDesk)}">
+          <img class="featured-bg-img" src="${_escapeHtml(featMob)}" alt="" decoding="async" draggable="false">
+        </picture>`
       : '';
     els.featured.innerHTML = `
       <div class="featured-bg">${featCover}</div>
@@ -215,7 +222,8 @@
     activeGame = game;
     // Prefer <img> so cover art shows reliably on iPad WebKit (bg-image can fail with shorthand resets).
     let img = els.sheetCover.querySelector('.sheet-cover-img');
-    if (game.cover) {
+    const sheetArt = game.featuredDesktop || game.cover;
+    if (sheetArt) {
       if (!img) {
         img = document.createElement('img');
         img.className = 'sheet-cover-img';
@@ -224,7 +232,7 @@
         img.draggable = false;
         els.sheetCover.insertBefore(img, els.sheetCover.firstChild);
       }
-      img.src = game.cover;
+      img.src = sheetArt;
       img.hidden = false;
     } else if (img) {
       img.removeAttribute('src');
