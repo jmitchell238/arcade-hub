@@ -3,7 +3,7 @@
   "hub": {
     "name": "Arcade Hub",
     "tagline": "All your games. One place.",
-    "appVersion": "1.1.054"
+    "appVersion": "1.1.055"
   },
   "games": [
     {
@@ -21,7 +21,7 @@
       ],
       "featured": false,
       "repo": "blockbound",
-      "version": "1.9.029",
+      "version": "1.9.086",
       "versionFile": "js/core/constants.js"
     },
     {
@@ -39,7 +39,7 @@
       ],
       "featured": false,
       "repo": "orb-merge-run",
-      "version": "1.3.000"
+      "version": "1.3.001"
     },
     {
       "id": "voidrush",
@@ -56,7 +56,7 @@
       ],
       "featured": true,
       "repo": "hole-game",
-      "version": "2.43.017"
+      "version": "2.43.018"
     },
     {
       "id": "crowd-clash",
@@ -73,7 +73,7 @@
       ],
       "featured": false,
       "repo": "crowd-runner",
-      "version": "1.0.1"
+      "version": "1.0.2"
     },
     {
       "id": "drop-and-fuse",
@@ -90,7 +90,7 @@
       ],
       "featured": false,
       "repo": "drop-and-fuse",
-      "version": "1.1.001"
+      "version": "1.1.002"
     },
     {
       "id": "neon-autofire",
@@ -107,7 +107,7 @@
       ],
       "featured": false,
       "repo": "neon-autofire",
-      "version": "1.3.001"
+      "version": "1.3.002"
     },
     {
       "id": "ironvale",
@@ -124,7 +124,7 @@
       ],
       "featured": false,
       "repo": "ironvale",
-      "version": "2.2.001"
+      "version": "2.2.002"
     },
     {
       "id": "bottle-sort",
@@ -141,7 +141,7 @@
       ],
       "featured": false,
       "repo": "bottle-sort",
-      "version": "1.2.001"
+      "version": "1.2.002"
     },
     {
       "id": "maze-adventure",
@@ -158,7 +158,7 @@
       ],
       "featured": false,
       "repo": "maze-adventure",
-      "version": "1.2.006"
+      "version": "1.2.007"
     },
     {
       "id": "animal-tap-zoo",
@@ -175,7 +175,7 @@
       ],
       "featured": false,
       "repo": "animal-tap-zoo",
-      "version": "1.1.001"
+      "version": "1.1.002"
     },
     {
       "id": "bubble-pop-garden",
@@ -192,7 +192,7 @@
       ],
       "featured": false,
       "repo": "bubble-pop-garden",
-      "version": "1.0.001"
+      "version": "1.0.002"
     },
     {
       "id": "color-match-pond",
@@ -209,7 +209,7 @@
       ],
       "featured": false,
       "repo": "color-match-pond",
-      "version": "1.0.001"
+      "version": "1.0.002"
     },
     {
       "id": "hide-seek-rooms",
@@ -226,7 +226,7 @@
       ],
       "featured": false,
       "repo": "hide-seek-rooms",
-      "version": "1.0.001"
+      "version": "1.0.002"
     },
     {
       "id": "treasure-dig",
@@ -243,7 +243,7 @@
       ],
       "featured": false,
       "repo": "treasure-dig",
-      "version": "1.0.001"
+      "version": "1.0.002"
     },
     {
       "id": "shape-train",
@@ -260,7 +260,7 @@
       ],
       "featured": false,
       "repo": "shape-train",
-      "version": "1.0.005"
+      "version": "1.0.006"
     },
     {
       "id": "dress-up-dino",
@@ -277,7 +277,7 @@
       ],
       "featured": false,
       "repo": "dress-up-dino",
-      "version": "1.0.003"
+      "version": "1.0.004"
     },
     {
       "id": "number-caterpillar",
@@ -294,7 +294,7 @@
       ],
       "featured": false,
       "repo": "number-caterpillar",
-      "version": "1.0.002"
+      "version": "1.0.003"
     },
     {
       "id": "letter-picnic",
@@ -311,7 +311,7 @@
       ],
       "featured": false,
       "repo": "letter-picnic",
-      "version": "1.0.000"
+      "version": "1.0.001"
     },
     {
       "id": "cozy-racers",
@@ -328,7 +328,7 @@
       ],
       "featured": false,
       "repo": "cozy-racers",
-      "version": "1.3.000"
+      "version": "1.3.001"
     },
     {
       "id": "dress-up-mermaid",
@@ -345,7 +345,7 @@
       ],
       "featured": false,
       "repo": "dress-up-mermaid",
-      "version": "1.0.003"
+      "version": "1.0.015"
     }
   ]
 }
